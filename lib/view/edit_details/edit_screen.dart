@@ -832,7 +832,7 @@ class _EditScreenState extends State<EditScreen> {
         ToastUtils.showCustomToast(
             backgroundColor: ColorUtils.red,
             context: context,
-            title: StringUtils.uploadYourImage);
+            title: StringUtils.uploadYourImage.tr);
       }
       // } else {
       //   setState(() {
@@ -881,7 +881,7 @@ class _EditScreenState extends State<EditScreen> {
         ToastUtils.showCustomToast(
             backgroundColor: ColorUtils.red,
             context: context,
-            title: StringUtils.uploadYourImage);
+            title: StringUtils.uploadYourImage.tr);
       }
       // } else {
       //   setState(() {

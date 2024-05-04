@@ -73,7 +73,7 @@ class _UploadStudentDetailsScreenState
         ToastUtils.showCustomToast(
             backgroundColor: ColorUtils.red,
             context: context,
-            title: StringUtils.uploadYourImage);
+            title: StringUtils.uploadYourImage.tr);
       }
 
       // } else {
@@ -121,7 +121,7 @@ class _UploadStudentDetailsScreenState
         ToastUtils.showCustomToast(
             backgroundColor: ColorUtils.red,
             context: context,
-            title: StringUtils.uploadYourImage);
+            title: StringUtils.uploadYourImage.tr);
       }
       // } else {
       //   setState(() {
@@ -343,7 +343,7 @@ class _UploadStudentDetailsScreenState
                                     if (selectedImage == null) {
                                       ToastUtils.showCustomToast(
                                         context: context,
-                                        title: StringUtils.image,
+                                        title: StringUtils.image.tr,
                                       );
                                     } else {
                                       showLoadingDialog(context: context);
@@ -378,8 +378,8 @@ class _UploadStudentDetailsScreenState
                                         hideLoadingDialog(context: context);
                                         ToastUtils.showCustomToast(
                                             context: context,
-                                            title:
-                                                StringUtils.somethingWentWrong);
+                                            title: StringUtils
+                                                .somethingWentWrong.tr);
                                       }
                                     }
                                   },

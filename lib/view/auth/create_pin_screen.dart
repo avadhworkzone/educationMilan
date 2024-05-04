@@ -286,17 +286,15 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
           await AuthService.signUp(user, widget.mobileNumber.toString());
       if (status) {
         hideLoadingDialog(context: context);
-
         PreferenceManagerUtils.setIsLogin(true);
-
         PreferenceManagerUtils.setPhoneNo(widget.mobileNumber.toString());
         Get.off(() => const HomeScreen());
         ToastUtils.showCustomToast(
-            context: context, title: StringUtils.signupSuccessfully);
+            context: context, title: StringUtils.signupSuccessfully.tr);
       } else {
         hideLoadingDialog(context: context);
         ToastUtils.showCustomToast(
-            context: context, title: StringUtils.somethingWentWrong);
+            context: context, title: StringUtils.somethingWentWrong.tr);
       }
     }
   }
