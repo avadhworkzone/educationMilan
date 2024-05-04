@@ -1,0 +1,103 @@
+import 'dart:ui';
+
+import 'package:EduPulse/utils/string_utils.dart';
+
+Map<String, String> en = {
+  StringUtils.appName: 'Edupulse',
+  StringUtils.details: "Details",
+  StringUtils.copyRightsMadvise: "@copyright madviseinfotech®",
+  StringUtils.somethingWentWrong: "Something went wrong",
+  StringUtils.logout: "Logout",
+  StringUtils.update: "Update",
+  StringUtils.signupSuccessfully: "Signup Successfully",
+  StringUtils.invalidPin: "InValid Pin",
+  StringUtils.pleaseEnterPin: "Please Enter Pin",
+  StringUtils.deleteSuccessfully: "Delete Successfully",
+  StringUtils.uploadYourImage: "Image should be under 15 MB",
+  StringUtils.isValidEmail: "Is Valid Email",
+  StringUtils.minimumCharterHint: "minimum charter hint",
+  StringUtils.enterYourNumber: "Please enter mobile number",
+  StringUtils.enterYourEmail: "Please enter email",
+  StringUtils.enterDigit: "Please enter mobile number",
+  StringUtils.isValidName: "Is Valid Name",
+  StringUtils.isValidFName: "Is Valid Father Name",
+  StringUtils.noInterNetMessage: "There is no internet please check properly",
+
+  /// splash screen
+  StringUtils.snehMilan: 'Snehmilan',
+  StringUtils.logoutTitle: 'are you sure you want to Logout?',
+  StringUtils.updateAvailable: 'Update available',
+  StringUtils.deleteTitle: 'શare you sure you want to delete?',
+  StringUtils.delete: 'Delete',
+  StringUtils.cancel: 'Cancel',
+
+  /// Signup Screen
+  StringUtils.welcome: 'Welcome!',
+  StringUtils.fullName: 'Full Name',
+  StringUtils.studentFullName: "Student's Full Name",
+  StringUtils.fatherFullName: "Father's Full Name",
+  StringUtils.villageName: 'Village Name',
+  StringUtils.phoneNumber: 'Phone Number',
+  StringUtils.signUp: 'SIGN UP',
+  StringUtils.login: 'LOGIN',
+  StringUtils.pleaseSelectOneImageFromTheList: 'Please select image',
+  StringUtils.pleaseChooseAtLeastOneImageBeforeSubmitting:
+      'please submit image',
+  StringUtils.signupDone: "successfully Signup...",
+  StringUtils.alreadyExist: "Number is already exist!",
+  StringUtils.addPin: 'Add PIN',
+  StringUtils.createPin: 'Create PIN',
+  StringUtils.enterEmail: 'Enter Email',
+  StringUtils.confirmPin: 'Confirm PIN',
+  StringUtils.forgetPin: 'Forgot Pin?',
+  StringUtils.next: 'Next',
+  StringUtils.image: 'Select Image',
+  StringUtils.requestSend: 'your request successfully send',
+  StringUtils.emailIsRequired: "email is required",
+  StringUtils.pleaseEnterValidEmail: "Please enter valid email",
+
+  /// student detail screen
+  StringUtils.studentDetails: 'Student Details',
+  StringUtils.standard: 'Standard',
+  StringUtils.percentage: 'Percentage(%)',
+  StringUtils.selectStandard: 'Select Standard',
+  StringUtils.uploadAPhotoOfYourResult: 'Upload A Photo Of Your Result',
+  StringUtils.dragAndDropResultHere: 'Drag And Drop Result Here',
+  StringUtils.or: 'Or',
+  StringUtils.xYZShah10thResult: 'XYZ Shah 10th result',
+  StringUtils.text100: '100%',
+
+  /// exit dialog
+  StringUtils.yes: "Yes",
+  StringUtils.no: "No",
+  StringUtils.exitApp: "Exit App",
+  StringUtils.areYouSureYouWantToExit: "Are you sure you want to exit app?",
+
+  ///Home Screen
+  StringUtils.noResult: "No result found",
+  StringUtils.signUpSuccessfully: "SignUp Successfully",
+  StringUtils.save: "Save",
+  StringUtils.viewReason: "View Reason",
+  StringUtils.reasonForReject: "Reason for Reject is..",
+  StringUtils.mob1: "Mobile Number 1",
+  StringUtils.mob2: "Mobile Number 2",
+  StringUtils.nameValidation: "Please Enter Student's Full Name",
+  StringUtils.fNameValidation: "Please Enter Father's Full Name",
+  StringUtils.villageValidation: "Please Select Village",
+  StringUtils.personaTageValidation: "Enter Percentage",
+  StringUtils.nameInvalid:
+      "Please enter valid name Name first and second surname",
+  StringUtils.fullname: "Please Enter Full Name",
+  StringUtils.mobileNoLength: "Mobile Number should be 10 digit",
+  StringUtils.phoneIsRequired: "Mobile Number is Required",
+  StringUtils.mobileNoLengthMoreThan10: "Mobile Number should be 10 digit",
+  StringUtils.addImage: "Add Image",
+  StringUtils.submit: "Submit",
+  StringUtils.lang: "Select Language",
+  StringUtils.selectVillage: "Select Village",
+  StringUtils.chooseFromGallery: "Choose From Gallery",
+  StringUtils.takePhoto: "Take a Photo",
+  StringUtils.forEnglishGrade: "If you have grade put 99 in percentage.",
+  StringUtils.lastDate:
+      "is a last date to submit result. Please submit before it.     ",
+};
