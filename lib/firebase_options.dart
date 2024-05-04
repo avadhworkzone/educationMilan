@@ -76,6 +76,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '305377445641',
     projectId: 'snehmilan-816cc',
     storageBucket: 'snehmilan-816cc.appspot.com',
-    iosBundleId: 'com.madvise.edu.RunnerTests',
+    iosBundleId: 'com.madvise.jamanedu.RunnerTests',
   );
 }

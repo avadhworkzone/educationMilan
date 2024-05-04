@@ -47,7 +47,7 @@ updateDialog(BuildContext context) async {
                         appStoreIdMacOS:
                             '284815942', // AppStore id of your app for MacOS (appStoreId used as default)
                         androidAppBundleId:
-                            'com.madvise.edu', // Android app bundle package name
+                            'com.madvise.jamanedu', // Android app bundle package name
                         windowsProductId:
                             '9NZTWSQNTD0S' // Microsoft store id for Widnows apps
                         );
