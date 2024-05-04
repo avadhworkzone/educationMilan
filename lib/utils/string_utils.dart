@@ -1,7 +1,7 @@
 class StringUtils {
   static String appVersion = '';
   static String appV = '';
-  static String appName = "કાત્રોડિયા પરિવાર";
+  static String appName = "જમણવાવ ગામ પટેલ સમાજ";
   static String details = "વિગતો";
   static String copyRightsMadvise = "@copyright madviseinfotech®";
   static String somethingWentWrong = "કંઈક ખોટું થયું!";
