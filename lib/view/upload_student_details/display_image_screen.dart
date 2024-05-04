@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/common/custom_btn.dart';
-import 'package:EduPulse/common/custom_text.dart';
-import 'package:EduPulse/common/exit_confirmtion_dialog.dart';
-import 'package:EduPulse/utils/asset_utils.dart';
-import 'package:EduPulse/utils/color_utils.dart';
-import 'package:EduPulse/utils/string_utils.dart';
-import 'package:EduPulse/view/upload_student_details/upload_student_details.dart';
+import 'package:Jamanvav/common/custom_btn.dart';
+import 'package:Jamanvav/common/custom_text.dart';
+import 'package:Jamanvav/common/exit_confirmtion_dialog.dart';
+import 'package:Jamanvav/utils/asset_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
+import 'package:Jamanvav/utils/string_utils.dart';
+import 'package:Jamanvav/view/upload_student_details/upload_student_details.dart';
 
 class ImageDisplayScreen extends StatelessWidget {
   final XFile selectedImage;

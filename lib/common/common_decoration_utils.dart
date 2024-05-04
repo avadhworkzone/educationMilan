@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:EduPulse/utils/color_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
 
 class DecorationUtils {
   static BoxDecoration shadowDecoration = BoxDecoration(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/common/custom_text.dart';
-import 'package:EduPulse/utils/string_utils.dart';
+import 'package:Jamanvav/common/custom_text.dart';
+import 'package:Jamanvav/utils/string_utils.dart';
 
 class MaintenanceScreen extends StatelessWidget {
   const MaintenanceScreen({Key? key}) : super(key: key);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/utils/color_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
 
 class LocalAssets extends StatelessWidget {
   const LocalAssets(

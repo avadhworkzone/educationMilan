@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:EduPulse/utils/string_utils.dart';
+import 'package:Jamanvav/utils/string_utils.dart';
 
 Map<String, String> en = {
-  StringUtils.appName: 'Edupulse',
+  StringUtils.appName: 'Jamanvav Gam Patel Samaj',
   StringUtils.details: "Details",
   StringUtils.copyRightsMadvise: "@copyright madviseinfotech®",
   StringUtils.somethingWentWrong: "Something went wrong",

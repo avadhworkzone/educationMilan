@@ -6,8 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/service/auth_service.dart';
-import 'package:EduPulse/utils/loading_dialog.dart';
+import 'package:Jamanvav/service/auth_service.dart';
+import 'package:Jamanvav/utils/loading_dialog.dart';
 
 import '../../common/common_show_toast.dart';
 import '../../common/custom_btn.dart';

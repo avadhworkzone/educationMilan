@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/utils/color_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
 
 void commomImageZoom(BuildContext context, String imageUrl) => showDialog(
       context: context,

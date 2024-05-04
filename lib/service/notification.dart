@@ -26,7 +26,7 @@ class NotificationMethods {
   ///OTHER NOTIFICATION SYSTEM DEFAULT SOUND
   static AndroidNotificationDetails androidPlatformChannelSpecifics() =>
       AndroidNotificationDetails(
-        'edupulse',
+        'jamanvav',
         'Notifications',
         // 'Notifications',
         color: Color(0xff67C117),
@@ -184,7 +184,7 @@ class NotificationMethods {
       Map<String, dynamic>? data}) async {
     /// PROD MODE SERVER KEY
     var serverKey =
-        'AAAA1sVllNI:APA91bGXmwGmZoOtfQfNRoFyq-uPHCK_7R9easl6cBy8P-k3f8QAlRdFCr1lY--XMI5a-fu4wZc-Fuxw8ou2m5cOdi_J-B4Np43M99_8A1aa9zNaxBDjsLNgLdHPn9-ujMvyUEXCaCdP';
+        'AAAAvYc0FTY:APA91bGulc9FSLx54e7r2LbwuHDV_nm962sR88oBj6u8ujruwXNbCnlboM5VIWD0l5FJN1MenNPIM4dYm-yH3louyFOJ-EGf2HymBYLuVGLfyGYM5KuZtvJPSEQYGYhQKfPAo3Yt0pJx';
     // 'AAAARAiPRRE:APA91bFjBkRIMPeSkMndxxDYmpmdAv4v_dt9J8chir_zGTSz_g7LniPLqyIhI2U9A6TJTxPk44o84Mq0XEJ2z6SC1lbDILYOgXCnIf9bjrwwTkYBvLhwgzFbol34ctWIUpnhbmY8e9kv';
     String body = jsonEncode(
       <String, dynamic>{

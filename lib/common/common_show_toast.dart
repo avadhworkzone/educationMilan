@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:EduPulse/utils/color_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
 
 class ToastUtils {
   static void showCustomToast({

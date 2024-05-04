@@ -1,4 +1,4 @@
-import 'package:EduPulse/utils/string_utils.dart';
+import 'package:Jamanvav/utils/string_utils.dart';
 import 'package:get/get.dart';
 
 class RegularExpressionUtils {

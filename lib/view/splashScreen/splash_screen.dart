@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/common/custom_text.dart';
-import 'package:EduPulse/utils/asset_utils.dart';
-import 'package:EduPulse/utils/shared_preference_utils.dart';
-import 'package:EduPulse/utils/string_utils.dart';
-import 'package:EduPulse/view/auth/sign_up_screen.dart';
-import 'package:EduPulse/view/home%20screen/home_screen.dart';
+import 'package:Jamanvav/common/custom_text.dart';
+import 'package:Jamanvav/utils/asset_utils.dart';
+import 'package:Jamanvav/utils/shared_preference_utils.dart';
+import 'package:Jamanvav/utils/string_utils.dart';
+import 'package:Jamanvav/view/auth/sign_up_screen.dart';
+import 'package:Jamanvav/view/home%20screen/home_screen.dart';
 
 import '../../utils/color_utils.dart';
 

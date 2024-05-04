@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/utils/asset_utils.dart';
-import 'package:EduPulse/utils/color_utils.dart';
+import 'package:Jamanvav/utils/asset_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
 
 class CustomText extends StatelessWidget {
   final String title;

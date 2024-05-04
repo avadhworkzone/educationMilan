@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/common/custom_text.dart';
-import 'package:EduPulse/utils/color_utils.dart';
+import 'package:Jamanvav/common/custom_text.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
 
 class CustomBtn extends StatelessWidget {
   final VoidCallback? onTap;

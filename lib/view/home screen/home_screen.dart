@@ -8,9 +8,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/model/connectivity_viewmodel.dart';
-import 'package:EduPulse/utils/app_enum.dart';
-import 'package:EduPulse/utils/asset_utils.dart';
+import 'package:Jamanvav/model/connectivity_viewmodel.dart';
+import 'package:Jamanvav/utils/app_enum.dart';
+import 'package:Jamanvav/utils/asset_utils.dart';
 import 'package:text_scroll/text_scroll.dart';
 import 'package:url_launcher/url_launcher.dart';
 

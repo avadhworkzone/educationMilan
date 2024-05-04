@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:EduPulse/utils/collection_utils.dart';
+import 'package:Jamanvav/utils/collection_utils.dart';
 
 class ConnectivityViewModel extends GetxController {
   ///======================AppVersionRepo View Model=====================

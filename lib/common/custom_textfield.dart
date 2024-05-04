@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
-import 'package:EduPulse/common/custom_text.dart';
-import 'package:EduPulse/common/custom_textstyle.dart';
-import 'package:EduPulse/utils/app_enum.dart';
-import 'package:EduPulse/utils/asset_utils.dart';
-import 'package:EduPulse/utils/color_utils.dart';
-import 'package:EduPulse/utils/no_leading_space_formatter.dart';
-import 'package:EduPulse/utils/regular_expression.dart';
+import 'package:Jamanvav/common/custom_text.dart';
+import 'package:Jamanvav/common/custom_textstyle.dart';
+import 'package:Jamanvav/utils/app_enum.dart';
+import 'package:Jamanvav/utils/asset_utils.dart';
+import 'package:Jamanvav/utils/color_utils.dart';
+import 'package:Jamanvav/utils/no_leading_space_formatter.dart';
+import 'package:Jamanvav/utils/regular_expression.dart';
 
 typedef OnChangeString = void Function(String value);
 

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:EduPulse/utils/string_utils.dart';
+import 'package:Jamanvav/utils/string_utils.dart';
 
 Map<String, String> gu = {
   StringUtils.appVersion: "",
