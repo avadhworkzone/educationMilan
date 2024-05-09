@@ -267,7 +267,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             width: Get.width,
             height: Get.height / 3,
             // margin: EdgeInsets.only(bottom: 50),
-            color: Color(0xff2E2694),
+            // color: Color(0xff2E2694),
+            color: Colors.white,
             // color: ColorUtils.primary,
             child: Stack(
               children: [
@@ -354,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Center(
                     child: Image.asset(
                       "assets/images/app_logo.png",
-                      height: 200,
+                      height: 300,
                     ),
                   ),
                 ),

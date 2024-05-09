@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:Jamanvav/utils/string_utils.dart';
 
 Map<String, String> en = {
-  StringUtils.appName: 'Jamanvav Gam Patel Samaj',
+  StringUtils.appName: 'Jamanvav Gam Patel Parivar',
   StringUtils.details: "Details",
   StringUtils.copyRightsMadvise: "@copyright madviseinfotech®",
   StringUtils.somethingWentWrong: "Something went wrong",
@@ -45,7 +45,7 @@ Map<String, String> en = {
       'please submit image',
   StringUtils.signupDone: "successfully Signup...",
   StringUtils.alreadyExist: "Number is already exist!",
-  StringUtils.addPin: 'Add PIN',
+  StringUtils.addPin: 'Enter PIN',
   StringUtils.createPin: 'Create PIN',
   StringUtils.enterEmail: 'Enter Email',
   StringUtils.confirmPin: 'Confirm PIN',

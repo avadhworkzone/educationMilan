@@ -257,15 +257,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: ColorUtils.white,
                         size: 30,
                       )),
-                  CustomText(
-                    StringUtils.appName.tr,
-                    color: ColorUtils.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
                   SizedBox(
-                    width: 30,
-                  )
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: CustomText(
+                      StringUtils.appName.tr,
+                      color: ColorUtils.white,
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
                   // Column(
                   //
                   //   children: [
@@ -522,8 +525,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ));
                                                 },
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      18.0),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 10),
                                                   child: Container(
                                                     width: Get.width,
                                                     decoration: BoxDecoration(
@@ -532,270 +537,322 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           BorderRadius.circular(
                                                               20),
                                                     ),
-                                                    child: Row(
-                                                      children: [
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          child: SizedBox(
-                                                            width: 90,
-                                                            height: 100,
-                                                            child: student
-                                                                        .result !=
-                                                                    null
-                                                                ? Image.network(
-                                                                    student
-                                                                        .result
-                                                                        .toString(),
-                                                                    fit: BoxFit
-                                                                        .fill,
-                                                                    loadingBuilder: (BuildContext
-                                                                            context,
-                                                                        Widget
-                                                                            child,
-                                                                        ImageChunkEvent?
-                                                                            loadingProgress) {
-                                                                      if (loadingProgress ==
-                                                                          null) {
-                                                                        return child;
-                                                                      } else {
-                                                                        return const Center(
-                                                                          child:
-                                                                              CircularProgressIndicator(color: ColorUtils.primaryColor),
-                                                                        );
-                                                                      }
-                                                                    },
-                                                                  )
-                                                                : const Center(
-                                                                    child: CircularProgressIndicator(
-                                                                        color: ColorUtils
-                                                                            .primaryColor),
-                                                                  ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              Get.width * 0.02,
-                                                        ),
-                                                        Expanded(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              CustomText(
-                                                                student
-                                                                    .studentFullName
-                                                                    .toString(),
-                                                                color: ColorUtils
-                                                                    .black32,
-                                                                fontSize: 14.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                maxLines: 2,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  CustomText(
-                                                                    "${StringUtils.standard.tr} : ",
-                                                                    color: ColorUtils
-                                                                        .greyB5,
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                  CustomText(
-                                                                    student
-                                                                        .standard
-                                                                        .toString(),
-                                                                    color: ColorUtils
-                                                                        .black32,
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  CustomText(
-                                                                    "${StringUtils.percentage.tr} : ",
-                                                                    color: ColorUtils
-                                                                        .greyB5,
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                  CustomText(
-                                                                    "${student.percentage}%",
-                                                                    color: ColorUtils
-                                                                        .black32,
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                ],
-                                                              ),
-
-                                                              ///STATUS FOR DOCUMENT.....
-                                                              Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  CustomText(
-                                                                    "Status : ",
-                                                                    color: ColorUtils
-                                                                        .greyB5,
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                  student.documentStatus !=
-                                                                          null
-                                                                      ? student.documentStatus ==
-                                                                              DocumentStatusTypeEnum.approve.name
-                                                                          ? Text(
-                                                                              "Approved",
-                                                                              style: TextStyle(
-                                                                                color: Colors.green,
-                                                                                fontSize: 10.sp,
-                                                                                fontWeight: FontWeight.w500,
-                                                                              ),
-                                                                            )
-                                                                          : student.documentStatus == DocumentStatusTypeEnum.delete.name
-                                                                              ? Text(
-                                                                                  "Reject",
-                                                                                  style: TextStyle(
-                                                                                    color: ColorUtils.red,
-                                                                                    fontSize: 10.sp,
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                  ),
-                                                                                )
-                                                                              : Text(
-                                                                                  "Pending",
-                                                                                  style: TextStyle(
-                                                                                    color: ColorUtils.black32,
-                                                                                    fontSize: 10.sp,
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                  ),
-                                                                                )
-                                                                      : Text(
-                                                                          "Pending",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                ColorUtils.black32,
-                                                                            fontSize:
-                                                                                10.sp,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                        ),
-                                                                ],
-                                                              ),
-
-                                                              SizedBox(
-                                                                height: 0.8.h,
-                                                              ),
-                                                              if (student
-                                                                      .documentStatus ==
-                                                                  DocumentStatusTypeEnum
-                                                                      .delete
-                                                                      .name)
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    showModalBottomSheet(
-                                                                      context:
-                                                                          context,
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      useSafeArea:
-                                                                          true,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return SafeArea(
-                                                                          child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child: SizedBox(
+                                                              width: 90,
+                                                              height: 100,
+                                                              child: student
+                                                                          .result !=
+                                                                      null
+                                                                  ? Image
+                                                                      .network(
+                                                                      student
+                                                                          .result
+                                                                          .toString(),
+                                                                      fit: BoxFit
+                                                                          .fill,
+                                                                      loadingBuilder: (BuildContext context,
+                                                                          Widget
+                                                                              child,
+                                                                          ImageChunkEvent?
+                                                                              loadingProgress) {
+                                                                        if (loadingProgress ==
+                                                                            null) {
+                                                                          return child;
+                                                                        } else {
+                                                                          return const Center(
                                                                             child:
-                                                                                Container(
-                                                                              decoration: const BoxDecoration(
-                                                                                color: Colors.white,
-                                                                              ),
-                                                                              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                                                                              child: SingleChildScrollView(
-                                                                                child: Column(
-                                                                                  mainAxisSize: MainAxisSize.min,
-                                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: [
-                                                                                    Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                      children: [
-                                                                                        CustomText(
-                                                                                          StringUtils.reasonForReject.tr,
-                                                                                          fontSize: 14.sp,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                        ),
-                                                                                        IconButton(
-                                                                                          onPressed: () {
-                                                                                            Get.back();
-                                                                                          },
-                                                                                          icon: const Icon(Icons.clear),
-                                                                                        )
-                                                                                      ],
-                                                                                    ),
-                                                                                    const Divider(),
-                                                                                    CustomText(student.documentReason!.tr ?? ''),
-                                                                                  ],
+                                                                                CircularProgressIndicator(color: ColorUtils.primaryColor),
+                                                                          );
+                                                                        }
+                                                                      },
+                                                                    )
+                                                                  : const Center(
+                                                                      child: CircularProgressIndicator(
+                                                                          color:
+                                                                              ColorUtils.primaryColor),
+                                                                    ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: Get.width *
+                                                                0.02,
+                                                          ),
+                                                          Expanded(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                CustomText(
+                                                                  student
+                                                                      .studentFullName
+                                                                      .toString(),
+                                                                  color: ColorUtils
+                                                                      .black32,
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    CustomText(
+                                                                      "${StringUtils.standard.tr} : ",
+                                                                      color: ColorUtils
+                                                                          .greyB5,
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                    CustomText(
+                                                                      student
+                                                                          .standard
+                                                                          .toString(),
+                                                                      color: ColorUtils
+                                                                          .black32,
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    CustomText(
+                                                                      "${StringUtils.percentage.tr} : ",
+                                                                      color: ColorUtils
+                                                                          .greyB5,
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                    CustomText(
+                                                                      "${student.percentage}%",
+                                                                      color: ColorUtils
+                                                                          .black32,
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                  ],
+                                                                ),
+
+                                                                ///STATUS FOR DOCUMENT.....
+                                                                Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    CustomText(
+                                                                      "Status : ",
+                                                                      color: ColorUtils
+                                                                          .greyB5,
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                    student.documentStatus !=
+                                                                            null
+                                                                        ? student.documentStatus ==
+                                                                                DocumentStatusTypeEnum.approve.name
+                                                                            ? Text(
+                                                                                "Approved",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.green,
+                                                                                  fontSize: 10.sp,
+                                                                                  fontWeight: FontWeight.w500,
                                                                                 ),
-                                                                              ),
+                                                                              )
+                                                                            : student.documentStatus == DocumentStatusTypeEnum.delete.name
+                                                                                ? Text(
+                                                                                    "Reject",
+                                                                                    style: TextStyle(
+                                                                                      color: ColorUtils.red,
+                                                                                      fontSize: 10.sp,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                                  )
+                                                                                : Text(
+                                                                                    "Pending",
+                                                                                    style: TextStyle(
+                                                                                      color: ColorUtils.black32,
+                                                                                      fontSize: 10.sp,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                                  )
+                                                                        : Text(
+                                                                            "Pending",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: ColorUtils.black32,
+                                                                              fontSize: 10.sp,
+                                                                              fontWeight: FontWeight.w500,
                                                                             ),
                                                                           ),
-                                                                        );
-                                                                      },
-                                                                    );
-                                                                  },
-                                                                  child:
-                                                                      CustomText(
-                                                                    StringUtils
-                                                                        .viewReason
-                                                                        .tr,
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .underline,
-                                                                  ),
+                                                                  ],
                                                                 ),
-                                                              SizedBox(
-                                                                height: 1.h,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
+
+                                                                SizedBox(
+                                                                  height: 0.8.h,
+                                                                ),
+                                                                if (student
+                                                                        .documentStatus ==
+                                                                    DocumentStatusTypeEnum
+                                                                        .delete
+                                                                        .name)
+                                                                  Container(
+                                                                    decoration: BoxDecoration(
+                                                                        border: Border.all(
+                                                                            color: ColorUtils
+                                                                                .red,
+                                                                            width:
+                                                                                1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(5)),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                      child:
+                                                                          Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          CustomText(
+                                                                            StringUtils.reasonForReject.tr +
+                                                                                ' : ',
+                                                                            fontSize:
+                                                                                8.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color:
+                                                                                ColorUtils.red,
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          CustomText(
+                                                                            student.documentReason!.tr ??
+                                                                                '',
+                                                                            fontSize:
+                                                                                12.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                // InkWell(
+                                                                //   onTap: () {
+                                                                //     showModalBottomSheet(
+                                                                //       context:
+                                                                //           context,
+                                                                //       isScrollControlled:
+                                                                //           true,
+                                                                //       backgroundColor:
+                                                                //           Colors
+                                                                //               .transparent,
+                                                                //       useSafeArea:
+                                                                //           true,
+                                                                //       builder:
+                                                                //           (context) {
+                                                                //         return SafeArea(
+                                                                //           child:
+                                                                //               ClipRRect(
+                                                                //             borderRadius:
+                                                                //                 const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                                                                //             child:
+                                                                //                 Container(
+                                                                //               decoration: const BoxDecoration(
+                                                                //                 color: Colors.white,
+                                                                //               ),
+                                                                //               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                                                                //               child: SingleChildScrollView(
+                                                                //                 child: Column(
+                                                                //                   mainAxisSize: MainAxisSize.min,
+                                                                //                   mainAxisAlignment: MainAxisAlignment.start,
+                                                                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                                                                //                   children: [
+                                                                //                     Row(
+                                                                //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                //                       crossAxisAlignment: CrossAxisAlignment.center,
+                                                                //                       children: [
+                                                                //                         CustomText(
+                                                                //                           StringUtils.reasonForReject.tr,
+                                                                //                           fontSize: 14.sp,
+                                                                //                           fontWeight: FontWeight.bold,
+                                                                //                         ),
+                                                                //                         IconButton(
+                                                                //                           onPressed: () {
+                                                                //                             Get.back();
+                                                                //                           },
+                                                                //                           icon: const Icon(Icons.clear),
+                                                                //                         )
+                                                                //                       ],
+                                                                //                     ),
+                                                                //                     const Divider(),
+                                                                //                     CustomText(student.documentReason!.tr ?? ''),
+                                                                //                   ],
+                                                                //                 ),
+                                                                //               ),
+                                                                //             ),
+                                                                //           ),
+                                                                //         );
+                                                                //       },
+                                                                //     );
+                                                                //   },
+                                                                //   child:
+                                                                //       CustomText(
+                                                                //     StringUtils
+                                                                //         .viewReason
+                                                                //         .tr,
+                                                                //     fontSize:
+                                                                //         10.sp,
+                                                                //     decoration:
+                                                                //         TextDecoration
+                                                                //             .underline,
+                                                                //   ),
+                                                                // ),
+                                                                SizedBox(
+                                                                  height: 1.h,
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

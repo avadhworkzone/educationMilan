@@ -4,7 +4,7 @@ import 'package:Jamanvav/utils/string_utils.dart';
 
 Map<String, String> gu = {
   StringUtils.appVersion: "",
-  StringUtils.appName: "કાત્રોડિયા પરિવાર",
+  StringUtils.appName: "જમણવાવ ગામ પટેલ પરિવાર",
   StringUtils.details: "વિગતો",
   StringUtils.copyRightsMadvise: "@copyright madviseinfotech®",
   StringUtils.somethingWentWrong: "કંઈક ખોટું થયું!",
@@ -48,7 +48,7 @@ Map<String, String> gu = {
       'સબમિટ કરતા પહેલા કૃપા કરીને ઓછામાં ઓછી એક છબી પસંદ કરો',
   StringUtils.signupDone: "સફળતાપૂર્વક Signup...",
   StringUtils.alreadyExist: "નંબર પહેલેથી જ અસ્તિત્વમાં છે!",
-  StringUtils.addPin: 'Add PIN',
+  StringUtils.addPin: 'Enter PIN',
   StringUtils.createPin: 'PIN બનાવો',
   StringUtils.enterEmail: 'ઈમેલ દાખલ કરો',
   StringUtils.confirmPin: 'PIN ની પુષ્ટિ કરો',

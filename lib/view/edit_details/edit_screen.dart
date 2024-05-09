@@ -73,8 +73,10 @@ class _EditScreenState extends State<EditScreen> {
     super.initState();
     standardsListFuture = firestoreService.getStandards();
     villageListFuture = firestoreService.getVillageName();
-    fullNameController.text = widget.fullName.toString().split('/').first;
-    fatherNameController.text = widget.fullName.toString().split('/').last;
+    fullNameController.text =
+        widget.fullName.toString().split('/').first.toUpperCase();
+    fatherNameController.text =
+        widget.fullName.toString().split('/').last.toUpperCase();
     percentageController.text = widget.personTage.toString();
     selectedValue = widget.standard.toString();
     imageId = widget.image;
@@ -644,7 +646,7 @@ class _EditScreenState extends State<EditScreen> {
                                 StudentModel reqModel = StudentModel();
                                 reqModel.standard = selectedValue.toString();
                                 reqModel.studentFullName =
-                                    '${fullNameController.text} / ${fatherNameController.text}';
+                                    '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}';
                                 reqModel.percentage =
                                     double.parse(percentageController.text);
                                 reqModel.studentId =

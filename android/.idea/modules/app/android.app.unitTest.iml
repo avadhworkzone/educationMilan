@@ -140,7 +140,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-annotations:16.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.concurrent:concurrent-futures:1.1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: /Users/dreamerboy/Documents/GitHub/final-release-katrodiya/build/app/intermediates/flutter/debug/libs.jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: /Users/dreamerboy/Documents/GitHub/jamanvav_edu/build/app/intermediates/flutter/debug/libs.jar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="android.app.main" />
 </module>

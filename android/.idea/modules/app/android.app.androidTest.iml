@@ -229,7 +229,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: io.flutter:x86_debug:1.0.0-54a7145303f0dd9d0f93424a2e124eb4abef5091" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.errorprone:error_prone_annotations:2.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-annotations:16.1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: /Users/dreamerboy/Documents/GitHub/final-release-katrodiya/build/app/intermediates/flutter/debug/libs.jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: /Users/dreamerboy/Documents/GitHub/jamanvav_edu/build/app/intermediates/flutter/debug/libs.jar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="android.app.main" />
 </module>

@@ -415,7 +415,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                                                 standard:
                                                     selectedValue.toString(),
                                                 studentFullName:
-                                                    '${fullNameController.text} / ${fatherNameController.text}',
+                                                    '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}',
                                                 villageName:
                                                     selectedVillageValue,
                                                 mobile: mob2.text.isEmpty
