@@ -59,9 +59,30 @@ class _HomeScreenState extends State<HomeScreen> {
       metaData = await connectivityViewModel.getAppMetaData();
 
       setState(() {
+        var startDate = metaData['lastDate'].toString();
+        List<String> dateParts = startDate.split('-');
+        int day = int.parse(dateParts[0]);
+        int month = int.parse(dateParts[1]);
+        int year = int.parse(dateParts[2]);
+        DateTime givenDate = DateTime(year, month, day);
+        DateTime currentDate = DateTime.now();
+        // Compare dates
+        if (currentDate.isBefore(givenDate)) {
+          isFinalDate = false;
+          print('Current date is before the given date.');
+        } else if (currentDate.isAfter(givenDate)) {
+          isFinalDate = true;
+
+          print('Current date is after the given date.');
+        } else {
+          isFinalDate = false;
+
+          print('Current date is the same as the given date.');
+        }
+
         finalDate = metaData['lastDate'].toString();
-        isFinalDate =
-            finalDate == DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+        print('final date===$isFinalDate');
       });
 
       if (Platform.isAndroid) {
