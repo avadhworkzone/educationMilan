@@ -64,6 +64,8 @@ class _EditScreenState extends State<EditScreen> {
   final FirestoreService firestoreService = FirestoreService();
   String? selectedValue;
   String? selectedVillageValue;
+  int? passingYear;
+
   String? selectedImage;
   String? downloadURL;
   String? imageId;
@@ -74,9 +76,9 @@ class _EditScreenState extends State<EditScreen> {
     standardsListFuture = firestoreService.getStandards();
     villageListFuture = firestoreService.getVillageName();
     fullNameController.text =
-        widget.fullName.toString().split('/').first.toUpperCase();
+        widget.fullName.toString().split('/').first.toUpperCase().trim();
     fatherNameController.text =
-        widget.fullName.toString().split('/').last.toUpperCase();
+        widget.fullName.toString().split('/').last.toUpperCase().trim();
     percentageController.text = widget.personTage.toString();
     selectedValue = widget.standard.toString();
     imageId = widget.image;
@@ -88,6 +90,12 @@ class _EditScreenState extends State<EditScreen> {
     }
 
     selectedVillageValue = widget.villageName.toString();
+
+    if (["STD 10", "STD 12 SCI", "STD 12 COM"].contains(widget.standard)) {
+      passingYear = 2024;
+    } else {
+      passingYear = 2025;
+    }
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -162,7 +170,7 @@ class _EditScreenState extends State<EditScreen> {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: ClipRRect(
+                                  child:widget.image == null ?SizedBox(): ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: widget.image != null &&
                                             widget.image!.startsWith('http')
@@ -337,397 +345,474 @@ class _EditScreenState extends State<EditScreen> {
                         //   keyBoardType: TextInputType.name,
                         //   validationType: ValidationTypeEnum.village,
                         // ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              StringUtils.villageName,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            SizedBox(
-                              height: 1.w,
-                            ),
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     // CustomText(
+                        //     //   StringUtils.villageName,
+                        //     //   fontWeight: FontWeight.w500,
+                        //     // ),
+                        //     // SizedBox(
+                        //     //   height: 1.w,
+                        //     // ),
+                        //
+                        //     /// drop down menu
+                        //     // SizedBox(
+                        //     //   width: 50.w,
+                        //     //   child: FutureBuilder<List<String>>(
+                        //     //     future: villageListFuture,
+                        //     //     builder: (context, snapshot) {
+                        //     //       if (snapshot.connectionState ==
+                        //     //           ConnectionState.waiting) {
+                        //     //         return const Center(
+                        //     //             child: CircularProgressIndicator(
+                        //     //           color: ColorUtils.primaryColor,
+                        //     //         ));
+                        //     //       } else if (snapshot.hasError) {
+                        //     //         return Center(
+                        //     //             child:
+                        //     //                 Text('Error: ${snapshot.error}'));
+                        //     //       } else if (!snapshot.hasData ||
+                        //     //           snapshot.data!.isEmpty) {
+                        //     //         return const Center(
+                        //     //             child: Text('No village found.'));
+                        //     //       } else {
+                        //     //         List<String> standardsList = snapshot.data!;
+                        //     //         Set<String> uniqueStandards =
+                        //     //             Set<String>.from(villageList);
+                        //     //         return DropdownButtonFormField<String>(
+                        //     //           decoration: InputDecoration(
+                        //     //             contentPadding: EdgeInsets.symmetric(
+                        //     //               horizontal: 2.w,
+                        //     //               vertical: 4.w,
+                        //     //             ),
+                        //     //             focusedErrorBorder:
+                        //     //                 const OutlineInputBorder(
+                        //     //               borderSide: BorderSide(
+                        //     //                   color: ColorUtils.redError,
+                        //     //                   width: 1),
+                        //     //               borderRadius: BorderRadius.all(
+                        //     //                   Radius.circular(12)),
+                        //     //             ),
+                        //     //             enabledBorder: const OutlineInputBorder(
+                        //     //               borderSide: BorderSide(
+                        //     //                   color: ColorUtils.greyF6,
+                        //     //                   width: 1),
+                        //     //               borderRadius: BorderRadius.all(
+                        //     //                   Radius.circular(12)),
+                        //     //             ),
+                        //     //             border: const OutlineInputBorder(
+                        //     //               borderSide: BorderSide(
+                        //     //                   color: ColorUtils.greyF6,
+                        //     //                   width: 1),
+                        //     //               borderRadius: BorderRadius.all(
+                        //     //                   Radius.circular(12)),
+                        //     //             ),
+                        //     //             focusedBorder: const OutlineInputBorder(
+                        //     //               borderSide: BorderSide(
+                        //     //                   color: ColorUtils.greyF6,
+                        //     //                   width: 1),
+                        //     //               borderRadius: BorderRadius.all(
+                        //     //                   Radius.circular(12)),
+                        //     //             ),
+                        //     //             errorBorder: const OutlineInputBorder(
+                        //     //               borderSide: BorderSide(
+                        //     //                   color: ColorUtils.redError,
+                        //     //                   width: 1),
+                        //     //               borderRadius: BorderRadius.all(
+                        //     //                   Radius.circular(12)),
+                        //     //             ),
+                        //     //             disabledBorder:
+                        //     //                 const OutlineInputBorder(
+                        //     //               borderSide: BorderSide(
+                        //     //                   color: ColorUtils.greyF6,
+                        //     //                   width: 1),
+                        //     //               borderRadius: BorderRadius.all(
+                        //     //                   Radius.circular(12)),
+                        //     //             ),
+                        //     //             errorStyle: TextStyle(
+                        //     //               color: Colors.red,
+                        //     //               fontSize: 9.sp,
+                        //     //               fontFamily: AssetsUtils.poppins,
+                        //     //             ),
+                        //     //             filled: true,
+                        //     //             fillColor: ColorUtils.greyF6,
+                        //     //             hintText: "Select village",
+                        //     //             hintStyle: TextStyle(
+                        //     //               color: ColorUtils.greyD3,
+                        //     //               fontFamily: AssetsUtils.poppins,
+                        //     //               fontSize: 10.5.sp,
+                        //     //             ),
+                        //     //           ),
+                        //     //           isExpanded: true,
+                        //     //           isDense: true,
+                        //     //           menuMaxHeight: 50.w,
+                        //     //           validator: (value) =>
+                        //     //               value == null ? "* Required" : null,
+                        //     //           dropdownColor: ColorUtils.greyF6,
+                        //     //           value: selectedVillageValue,
+                        //     //           onChanged: (String? villageName) {
+                        //     //             setState(() {
+                        //     //               selectedVillageValue = villageName;
+                        //     //             });
+                        //     //             Form.of(context).validate();
+                        //     //           },
+                        //     //           items: uniqueStandards
+                        //     //               .map((String villageName) {
+                        //     //             return DropdownMenuItem<String>(
+                        //     //               value: villageName,
+                        //     //               child: Text(
+                        //     //                   villageName.capitalizeFirst!),
+                        //     //             );
+                        //     //           }).toList(),
+                        //     //         );
+                        //     //       }
+                        //     //     },
+                        //     //   ),
+                        //     // ),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: 4.w,
+                        // ),
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         CustomText(
+                        //           StringUtils.standard,
+                        //           fontWeight: FontWeight.w500,
+                        //         ),
+                        //         SizedBox(
+                        //           height: 1.w,
+                        //         ),
+                        //
+                        //         /// drop down menu
+                        //         SizedBox(
+                        //           width: 50.w,
+                        //           child: FutureBuilder<List<String>>(
+                        //             future: standardsListFuture,
+                        //             builder: (context, snapshot) {
+                        //               if (snapshot.connectionState ==
+                        //                   ConnectionState.waiting) {
+                        //                 return const Center(
+                        //                     child: CircularProgressIndicator(
+                        //                   color: ColorUtils.primaryColor,
+                        //                 ));
+                        //               } else if (snapshot.hasError) {
+                        //                 return Center(
+                        //                     child: Text(
+                        //                         'Error: ${snapshot.error}'));
+                        //               } else if (!snapshot.hasData ||
+                        //                   snapshot.data!.isEmpty) {
+                        //                 return const Center(
+                        //                     child: Text('No standards found.'));
+                        //               } else {
+                        //                 List<String> standardsList =
+                        //                     snapshot.data!;
+                        //                 Set<String> uniqueStandards =
+                        //                     Set<String>.from(standardsList);
+                        //                 return DropdownButtonFormField<String>(
+                        //                   decoration: InputDecoration(
+                        //                     contentPadding:
+                        //                         EdgeInsets.symmetric(
+                        //                       horizontal: 2.w,
+                        //                       vertical: 4.w,
+                        //                     ),
+                        //                     focusedErrorBorder:
+                        //                         const OutlineInputBorder(
+                        //                       borderSide: BorderSide(
+                        //                           color: ColorUtils.redError,
+                        //                           width: 1),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(12)),
+                        //                     ),
+                        //                     enabledBorder:
+                        //                         const OutlineInputBorder(
+                        //                       borderSide: BorderSide(
+                        //                           color: ColorUtils.greyF6,
+                        //                           width: 1),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(12)),
+                        //                     ),
+                        //                     border: const OutlineInputBorder(
+                        //                       borderSide: BorderSide(
+                        //                           color: ColorUtils.greyF6,
+                        //                           width: 1),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(12)),
+                        //                     ),
+                        //                     focusedBorder:
+                        //                         const OutlineInputBorder(
+                        //                       borderSide: BorderSide(
+                        //                           color: ColorUtils.greyF6,
+                        //                           width: 1),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(12)),
+                        //                     ),
+                        //                     errorBorder:
+                        //                         const OutlineInputBorder(
+                        //                       borderSide: BorderSide(
+                        //                           color: ColorUtils.redError,
+                        //                           width: 1),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(12)),
+                        //                     ),
+                        //                     disabledBorder:
+                        //                         const OutlineInputBorder(
+                        //                       borderSide: BorderSide(
+                        //                           color: ColorUtils.greyF6,
+                        //                           width: 1),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(12)),
+                        //                     ),
+                        //                     errorStyle: TextStyle(
+                        //                       color: Colors.red,
+                        //                       fontSize: 9.sp,
+                        //                       fontFamily: AssetsUtils.poppins,
+                        //                     ),
+                        //                     filled: true,
+                        //                     fillColor: ColorUtils.greyF6,
+                        //                     hintText: "Select standard",
+                        //                     hintStyle: TextStyle(
+                        //                       color: ColorUtils.greyD3,
+                        //                       fontFamily: AssetsUtils.poppins,
+                        //                       fontSize: 10.5.sp,
+                        //                     ),
+                        //                   ),
+                        //                   isExpanded: true,
+                        //                   isDense: true,
+                        //                   menuMaxHeight: 50.w,
+                        //                   validator: (value) => value == null
+                        //                       ? "* Required"
+                        //                       : null,
+                        //                   dropdownColor: ColorUtils.greyF6,
+                        //                   value: selectedValue,
+                        //                   onChanged: (String? newValue) {
+                        //                     setState(() {
+                        //                       selectedValue = newValue;
+                        //                     });
+                        //                     Form.of(context).validate();
+                        //                   },
+                        //                   items: uniqueStandards
+                        //                       .map((String standard) {
+                        //                     return DropdownMenuItem<String>(
+                        //                       value: standard,
+                        //                       child: Text(standard),
+                        //                     );
+                        //                   }).toList(),
+                        //                 );
+                        //               }
+                        //             },
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     SizedBox(
+                        //       width: 3.w,
+                        //     ),
+                        //     Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         CustomText(
+                        //           StringUtils.percentage,
+                        //           fontWeight: FontWeight.w500,
+                        //         ),
+                        //         SizedBox(
+                        //           height: 1.w,
+                        //         ),
+                        //
+                        //         /// percentage
+                        //         SizedBox(
+                        //           width: 35.w,
+                        //           child: CommonTextField(
+                        //             textEditController: percentageController,
+                        //             regularExpression: RegularExpressionUtils
+                        //                 .percentagePattern,
+                        //             keyBoardType: TextInputType.number,
+                        //             validationType:
+                        //                 ValidationTypeEnum.percentage,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
 
-                            /// drop down menu
-                            SizedBox(
-                              width: 50.w,
-                              child: FutureBuilder<List<String>>(
-                                future: villageListFuture,
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                        child: CircularProgressIndicator(
-                                      color: ColorUtils.primaryColor,
-                                    ));
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                        child:
-                                            Text('Error: ${snapshot.error}'));
-                                  } else if (!snapshot.hasData ||
-                                      snapshot.data!.isEmpty) {
-                                    return const Center(
-                                        child: Text('No village found.'));
-                                  } else {
-                                    List<String> standardsList = snapshot.data!;
-                                    Set<String> uniqueStandards =
-                                        Set<String>.from(villageList);
-                                    return DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 2.w,
-                                          vertical: 4.w,
-                                        ),
-                                        focusedErrorBorder:
-                                            const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: ColorUtils.redError,
-                                              width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: ColorUtils.greyF6,
-                                              width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        border: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: ColorUtils.greyF6,
-                                              width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: ColorUtils.greyF6,
-                                              width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        errorBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: ColorUtils.redError,
-                                              width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        disabledBorder:
-                                            const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: ColorUtils.greyF6,
-                                              width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        errorStyle: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 9.sp,
-                                          fontFamily: AssetsUtils.poppins,
-                                        ),
-                                        filled: true,
-                                        fillColor: ColorUtils.greyF6,
-                                        hintText: "Select village",
-                                        hintStyle: TextStyle(
-                                          color: ColorUtils.greyD3,
-                                          fontFamily: AssetsUtils.poppins,
-                                          fontSize: 10.5.sp,
-                                        ),
-                                      ),
-                                      isExpanded: true,
-                                      isDense: true,
-                                      menuMaxHeight: 50.w,
-                                      validator: (value) =>
-                                          value == null ? "* Required" : null,
-                                      dropdownColor: ColorUtils.greyF6,
-                                      value: selectedVillageValue,
-                                      onChanged: (String? villageName) {
-                                        setState(() {
-                                          selectedVillageValue = villageName;
-                                        });
-                                        Form.of(context).validate();
-                                      },
-                                      items: uniqueStandards
-                                          .map((String villageName) {
-                                        return DropdownMenuItem<String>(
-                                          value: villageName,
-                                          child: Text(
-                                              villageName.capitalizeFirst!),
-                                        );
-                                      }).toList(),
-                                    );
-                                  }
+
+                        CustomText(StringUtils.standard, fontWeight: FontWeight.w500),
+                        SizedBox(height: 1.w),
+                        FutureBuilder<List<String>>(
+                          future: standardsListFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              final standards = snapshot.data ?? [];
+                              return DropdownButtonFormField<String>(
+                                value: selectedValue,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: ColorUtils.greyF6,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  hintText: "Select Standard",
+                                ),
+                                items: standards.map((std) => DropdownMenuItem(
+                                  value: std,
+                                  child: Text(std),
+                                )).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedValue = value;
+                                    if (["STD 10", "STD 12 SCI", "STD 12 COM"].contains(value)) {
+                                      passingYear = 2024;
+                                    } else {
+                                      passingYear = 2025;
+                                    }
+                                  });
                                 },
-                              ),
-                            ),
-                          ],
+                              );
+                            }
+                          },
                         ),
-                        SizedBox(
-                          height: 4.w,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
+                        if (passingYear != null)
+                          Padding(
+                            padding: EdgeInsets.only(top: 2.h),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CustomText(
-                                  StringUtils.standard,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                SizedBox(
-                                  height: 1.w,
-                                ),
-
-                                /// drop down menu
-                                SizedBox(
-                                  width: 50.w,
-                                  child: FutureBuilder<List<String>>(
-                                    future: standardsListFuture,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return const Center(
-                                            child: CircularProgressIndicator(
-                                          color: ColorUtils.primaryColor,
-                                        ));
-                                      } else if (snapshot.hasError) {
-                                        return Center(
-                                            child: Text(
-                                                'Error: ${snapshot.error}'));
-                                      } else if (!snapshot.hasData ||
-                                          snapshot.data!.isEmpty) {
-                                        return const Center(
-                                            child: Text('No standards found.'));
-                                      } else {
-                                        List<String> standardsList =
-                                            snapshot.data!;
-                                        Set<String> uniqueStandards =
-                                            Set<String>.from(standardsList);
-                                        return DropdownButtonFormField<String>(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                              horizontal: 2.w,
-                                              vertical: 4.w,
-                                            ),
-                                            focusedErrorBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorUtils.redError,
-                                                  width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            enabledBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorUtils.greyF6,
-                                                  width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            border: const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorUtils.greyF6,
-                                                  width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorUtils.greyF6,
-                                                  width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            errorBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorUtils.redError,
-                                                  width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            disabledBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorUtils.greyF6,
-                                                  width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            errorStyle: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 9.sp,
-                                              fontFamily: AssetsUtils.poppins,
-                                            ),
-                                            filled: true,
-                                            fillColor: ColorUtils.greyF6,
-                                            hintText: "Select standard",
-                                            hintStyle: TextStyle(
-                                              color: ColorUtils.greyD3,
-                                              fontFamily: AssetsUtils.poppins,
-                                              fontSize: 10.5.sp,
-                                            ),
-                                          ),
-                                          isExpanded: true,
-                                          isDense: true,
-                                          menuMaxHeight: 50.w,
-                                          validator: (value) => value == null
-                                              ? "* Required"
-                                              : null,
-                                          dropdownColor: ColorUtils.greyF6,
-                                          value: selectedValue,
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              selectedValue = newValue;
-                                            });
-                                            Form.of(context).validate();
-                                          },
-                                          items: uniqueStandards
-                                              .map((String standard) {
-                                            return DropdownMenuItem<String>(
-                                              value: standard,
-                                              child: Text(standard),
-                                            );
-                                          }).toList(),
-                                        );
-                                      }
-                                    },
+                                CustomText("Passing Year", fontWeight: FontWeight.w500),
+                                SizedBox(height: 1.w),
+                                Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: ColorUtils.greyF6,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    passingYear.toString(),
+                                    style: TextStyle(fontSize: 10.5.sp, color: ColorUtils.black),
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  StringUtils.percentage,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                SizedBox(
-                                  height: 1.w,
-                                ),
-
-                                /// percentage
-                                SizedBox(
-                                  width: 35.w,
-                                  child: CommonTextField(
-                                    textEditController: percentageController,
-                                    regularExpression: RegularExpressionUtils
-                                        .percentagePattern,
-                                    keyBoardType: TextInputType.number,
-                                    validationType:
-                                        ValidationTypeEnum.percentage,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
+                        SizedBox(height: 2.h),
+                        CustomText(StringUtils.percentage, fontWeight: FontWeight.w500),
+                        SizedBox(height: 1.w),
+                        CommonTextField(
+                          textEditController: percentageController,
+                          regularExpression: RegularExpressionUtils.percentagePattern,
+                          keyBoardType: TextInputType.number,
+                          validationType: ValidationTypeEnum.percentage,
+                          inputLength: 5,
                         ),
                         SizedBox(
                           height: Get.height * 0.10,
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Get.width * 0.19),
-                          child: InkWell(
-                            onTap: () async {
-                              if (_formKey.currentState!.validate()) {
-                                showLoadingDialog(context: context);
-                                await _uploadImageToFirebase();
-                                StudentModel reqModel = StudentModel();
-                                reqModel.standard = selectedValue.toString();
-                                reqModel.studentFullName =
-                                    '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}';
-                                reqModel.percentage =
-                                    double.parse(percentageController.text);
-                                reqModel.studentId =
-                                    widget.studentId.toString();
-                                reqModel.villageName =
-                                    selectedVillageValue.toString();
-                                reqModel.userId = widget.userId.toString();
-                                reqModel.mobileNumber = mobile2Controller
-                                        .text.isEmpty
-                                    ? mobile1Controller.text
-                                    : '${mobile1Controller.text} / ${mobile2Controller.text}';
-                                reqModel.fcmToken =
-                                    PreferenceManagerUtils.getIsFCM();
-                                reqModel.documentStatus =
-                                    DocumentStatusTypeEnum.pending.name;
-                                reqModel.documentReason = '';
-                                reqModel.createdDate =
-                                    DateTime.now().toLocal().toString();
-                                reqModel.result = selectedImage != null
-                                    ? downloadURL
-                                    : widget.image;
-                                reqModel.imageId = imageId;
-                                reqModel.isApproved = false;
-                                // reqModel.documentReason ='';
-                                // reqModel.documentStatus =DocumentStatusTypeEnum.pending.name;
+                        Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    showLoadingDialog(context: context);
+                                    await _uploadImageToFirebase();
+                                    StudentModel reqModel = StudentModel();
+                                    reqModel.standard = selectedValue.toString();
+                                    reqModel.studentFullName =
+                                        '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}';
+                                    reqModel.percentage =
+                                        double.parse(percentageController.text);
+                                    reqModel.studentId =
+                                        widget.studentId.toString();
+                                    reqModel.villageName ='Jamanvav';
+                                        // selectedVillageValue.toString();
+                                    reqModel.userId = widget.userId.toString();
+                                    reqModel.mobileNumber = mobile2Controller
+                                            .text.isEmpty
+                                        ? mobile1Controller.text
+                                        : '${mobile1Controller.text} / ${mobile2Controller.text}';
+                                    reqModel.fcmToken =
+                                        PreferenceManagerUtils.getIsFCM();
+                                    reqModel.documentStatus =
+                                        DocumentStatusTypeEnum.pending.name;
+                                    reqModel.documentReason = '';
+                                    reqModel.createdDate =
+                                        DateTime.now().toLocal().toString();
+                                    reqModel.result = selectedImage != null
+                                        ? downloadURL
+                                        : widget.image;
+                                    reqModel.imageId = imageId;
+                                    reqModel.isApproved = false;
+                                    // reqModel.documentReason ='';
+                                    // reqModel.documentStatus =DocumentStatusTypeEnum.pending.name;
 
-                                final status =
-                                    await StudentService.studentDetailsEdit(
-                                        reqModel);
-                                if (status) {
-                                  hideLoadingDialog(context: context);
-                                  Get.off(() => const HomeScreen());
-                                } else {
-                                  hideLoadingDialog(context: context);
-                                  ToastUtils.showCustomToast(
-                                      context: context,
-                                      title: StringUtils.somethingWentWrong.tr);
-                                }
-                              }
-                            },
-                            child: Container(
-                              height: Get.height * 0.06,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: ColorUtils.primaryColor,
-                              ),
-                              child: Center(
-                                child: CustomText(
-                                  StringUtils.save,
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorUtils.white,
+                                    final status =
+                                        await StudentService.studentDetailsEdit(
+                                            reqModel);
+                                    if (status) {
+                                      hideLoadingDialog(context: context);
+                                      Get.off(() => const HomeScreen());
+                                    } else {
+                                      hideLoadingDialog(context: context);
+                                      ToastUtils.showCustomToast(
+                                          context: context,
+                                          title: StringUtils.somethingWentWrong.tr);
+                                    }
+                                  }
+                                },
+                                child: Container(
+                                  width: Get.width,
+
+                                  height: Get.height * 0.06,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: ColorUtils.primaryColor,
+                                  ),
+                                  child: Center(
+                                    child: CustomText(
+                                      StringUtils.save,
+                                      fontWeight: FontWeight.w700,
+                                      color: ColorUtils.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: Get.height * 0.02,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Get.width * 0.19),
-                          child: InkWell(
-                            onTap: () {
-                              commonDialog();
-                            },
-                            child: Container(
-                              height: Get.height * 0.06,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: ColorUtils.primaryColor,
-                              ),
-                              child: Center(
-                                child: CustomText(
-                                  StringUtils.delete,
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorUtils.white,
+                            SizedBox(
+                              width: Get.height * 0.02,
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  commonDialog();
+                                },
+                                child: Container(
+                                  height: Get.height * 0.06,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: ColorUtils.primaryColor,
+                                  ),
+                                  child: Center(
+                                    child: CustomText(
+                                      StringUtils.delete,
+                                      fontWeight: FontWeight.w700,
+                                      color: ColorUtils.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                         SizedBox(
                           height: 4.w,

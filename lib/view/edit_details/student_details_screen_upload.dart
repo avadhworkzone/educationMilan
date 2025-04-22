@@ -182,23 +182,23 @@ class _StudentDetailsScreenUpLoadState
                       SizedBox(
                         height: 2.w,
                       ),
-                      CustomText(
-                        StringUtils.villageName,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      SizedBox(
-                        height: 1.w,
-                      ),
-
-                      /// village field
-                      CommonTextField(
-                        textEditController: villageController,
-                        regularExpression:
-                            RegularExpressionUtils.alphabetSpacePattern,
-                        keyBoardType: TextInputType.name,
-                        validationType: ValidationTypeEnum.village,
-                        readOnly: true,
-                      ),
+                      // CustomText(
+                      //   StringUtils.villageName,
+                      //   fontWeight: FontWeight.w500,
+                      // ),
+                      // SizedBox(
+                      //   height: 1.w,
+                      // ),
+                      //
+                      // /// village field
+                      // CommonTextField(
+                      //   textEditController: villageController,
+                      //   regularExpression:
+                      //       RegularExpressionUtils.alphabetSpacePattern,
+                      //   keyBoardType: TextInputType.name,
+                      //   validationType: ValidationTypeEnum.village,
+                      //   readOnly: true,
+                      // ),
                       SizedBox(
                         height: 4.w,
                       ),

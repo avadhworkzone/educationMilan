@@ -356,7 +356,7 @@ class _UploadStudentDetailsScreenState
                                       reqModel.studentFullName =
                                           widget.studentFullName;
                                       reqModel.mobileNumber = widget.mobile;
-                                      reqModel.villageName = widget.villageName;
+                                      reqModel.villageName ='JamanVav';
                                       reqModel.isApproved = false;
                                       reqModel.imageId = imageId;
 

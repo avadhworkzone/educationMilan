@@ -26,23 +26,26 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   final TextEditingController fatherNameController = TextEditingController();
   final TextEditingController mob1 = TextEditingController();
   final TextEditingController mob2 = TextEditingController();
-  // final TextEditingController villageController = TextEditingController();
   final TextEditingController percentageController = TextEditingController();
-  final TextEditingController colorController = TextEditingController();
-  final TextEditingController iconController = TextEditingController();
+
   final FirestoreService firestoreService = FirestoreService();
 
-  bool isDropdownOpen = false;
-
   String? selectedValue, selectedVillageValue;
-  String? validationMessage;
   Future<List<String>>? standardsListFuture;
   Future<List<String>>? villageListFuture;
+
+  int? passingYear;
+  Set<String> standardsList = {};
 
   @override
   void initState() {
     super.initState();
-    standardsListFuture = firestoreService.getStandards();
+    selectedVillageValue = 'Jamanvav';
+    standardsListFuture = firestoreService.getStandards().then((list) {
+      standardsList = Set<String>.from(list);
+      print('standerd--->$standardsList');
+      return list;
+    });
     villageListFuture = firestoreService.getVillageName();
   }
 
@@ -58,406 +61,230 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
         body: SafeArea(
           child: Form(
             key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: ColorUtils.white,
-                            size: 20,
-                          )),
-                      CustomText(
-                        StringUtils.appName,
-                        color: ColorUtils.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5.w,
-                  ),
-                  Container(
-                    height: 200.w,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () => Get.back(),
+                      icon: const Icon(Icons.arrow_back_ios, color: ColorUtils.white, size: 20),
+                    ),
+                    CustomText(
+                      StringUtils.appName,
+                      color: ColorUtils.white,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    const SizedBox(width: 20),
+                  ],
+                ),
+                SizedBox(height: 5.w),
+                Expanded(
+                  child: Container(
                     width: double.infinity,
+
                     decoration: BoxDecoration(
-                        color: ColorUtils.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10.w),
-                            topLeft: Radius.circular(10.w))),
+                      color: ColorUtils.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10.w),
+                        topLeft: Radius.circular(10.w),
+                      ),
+                    ),
                     child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 3.w, horizontal: 10.w),
-                      child: Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Center(
-                                child: CustomText(
-                                  StringUtils.studentDetails,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12.sp,
-                                ),
+                      padding: EdgeInsets.symmetric(vertical: 3.w, horizontal: 10.w),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: CustomText(
+                                StringUtils.studentDetails,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
                               ),
-                              SizedBox(
-                                height: 8.w,
-                              ),
-                              CustomText(
-                                StringUtils.studentFullName,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              SizedBox(
-                                height: 1.w,
-                              ),
-
-                              /// name field
-                              CommonTextField(
-                                textEditController: fullNameController,
-                                regularExpression:
-                                    RegularExpressionUtils.alphabetSpacePattern,
-                                keyBoardType: TextInputType.name,
-                                validationType: ValidationTypeEnum.name,
-                              ),
-                              SizedBox(
-                                height: 2.w,
-                              ),
-
-                              CustomText(
-                                StringUtils.fatherFullName,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              SizedBox(
-                                height: 1.w,
-                              ),
-
-                              /// father field
-                              CommonTextField(
-                                textEditController: fatherNameController,
-                                regularExpression:
-                                    RegularExpressionUtils.alphabetSpacePattern,
-                                keyBoardType: TextInputType.name,
-                                validationType: ValidationTypeEnum.fName,
-                              ),
-                              SizedBox(
-                                height: 2.w,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        CustomText(
-                                          StringUtils.mob1.tr,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        SizedBox(
-                                          height: 1.w,
-                                        ),
-
-                                        /// mob1 field
-                                        CommonTextField(
-                                          textEditController: mob1,
-                                          regularExpression:
-                                              RegularExpressionUtils
-                                                  .digitsPattern,
-                                          keyBoardType: TextInputType.number,
-                                          validationType:
-                                              ValidationTypeEnum.pNumber,
-                                          inputLength: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 2.w,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        CustomText(
-                                          StringUtils.mob2.tr,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        SizedBox(
-                                          height: 1.w,
-                                        ),
-
-                                        /// mob2 field
-                                        CommonTextField(
-                                          textEditController: mob2,
-                                          regularExpression:
-                                              RegularExpressionUtils
-                                                  .digitsPattern,
-                                          keyBoardType: TextInputType.number,
-                                          inputLength: 10,
-                                          // validationType: ValidationTypeEnum.fName,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 2.w,
-                              ),
-
-                              /// village field
-                              // CommonTextField(
-                              //   textEditController: villageController,
-                              //   regularExpression:
-                              //       RegularExpressionUtils.alphabetSpacePattern,
-                              //   keyBoardType: TextInputType.name,
-                              //   validationType: ValidationTypeEnum.village,
-                              // ),
-                              SizedBox(
-                                height: 3.w,
-                              ),
-
-                              ///SELECT VILLAGE...
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    StringUtils.villageName,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  SizedBox(
-                                    height: 1.w,
-                                  ),
-
-                                  /// village drop down menu
-                                  SizedBox(
-                                    width: 45.w,
-                                    child: standardsList.isNotEmpty
-                                        ? villageListWidget()
-                                        : FutureBuilder<List<String>>(
-                                            future: villageListFuture,
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return
-                                                    // const Center(
-                                                    // child: CustomText("Std"),
-                                                    // );
-                                                    const Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                  color:
-                                                      ColorUtils.primaryColor,
-                                                ));
-                                              } else if (snapshot.hasError) {
-                                                return Center(
-                                                    child: Text(
-                                                        'Error: ${snapshot.error}'));
-                                              } else if (!snapshot.hasData ||
-                                                  snapshot.data!.isEmpty) {
-                                                return const Center(
-                                                    child: Text(
-                                                        'No standards found.'));
-                                              } else {
-                                                // List<String> standardsList =
-                                                //     snapshot.data!;
-                                                return villageListWidget();
-                                              }
-                                            },
-                                          ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3.w,
-                              ),
-
-                              ///STANDARD
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CustomText(
-                                          StringUtils.standard,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        SizedBox(
-                                          height: 1.w,
-                                        ),
-
-                                        /// drop down menu
-                                        SizedBox(
-                                          // width: 45.w,
-                                          child: standardsList.isNotEmpty
-                                              ? stdListWidget()
-                                              : FutureBuilder<List<String>>(
-                                                  future: standardsListFuture,
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting) {
-                                                      return
-                                                          // const Center(
-                                                          // child: CustomText("Std"),
-                                                          // );
-                                                          const Center(
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                        color: ColorUtils
-                                                            .primaryColor,
-                                                      ));
-                                                    } else if (snapshot
-                                                        .hasError) {
-                                                      return Center(
-                                                          child: Text(
-                                                              'Error: ${snapshot.error}'));
-                                                    } else if (!snapshot
-                                                            .hasData ||
-                                                        snapshot
-                                                            .data!.isEmpty) {
-                                                      return const Center(
-                                                          child: Text(
-                                                              'No standards found.'));
-                                                    } else {
-                                                      // List<String> standardsList =
-                                                      //     snapshot.data!;
-                                                      return stdListWidget();
-                                                    }
-                                                  },
-                                                ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            ),
+                            SizedBox(height: 8.w),
+                            CustomText(StringUtils.studentFullName, fontWeight: FontWeight.w500),
+                            SizedBox(height: 1.w),
+                            CommonTextField(
+                              textEditController: fullNameController,
+                              regularExpression: RegularExpressionUtils.alphabetSpacePattern,
+                              keyBoardType: TextInputType.name,
+                              validationType: ValidationTypeEnum.name,
+                            ),
+                            SizedBox(height: 2.w),
+                            CustomText(StringUtils.fatherFullName, fontWeight: FontWeight.w500),
+                            SizedBox(height: 1.w),
+                            CommonTextField(
+                              textEditController: fatherNameController,
+                              regularExpression: RegularExpressionUtils.alphabetSpacePattern,
+                              keyBoardType: TextInputType.name,
+                              validationType: ValidationTypeEnum.fName,
+                            ),
+                            SizedBox(height: 2.w),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      CustomText(
-                                        StringUtils.percentage,
-                                        fontWeight: FontWeight.w500,
+                                      CustomText(StringUtils.mob1.tr, fontWeight: FontWeight.w500),
+                                      SizedBox(height: 1.w),
+                                      CommonTextField(
+                                        textEditController: mob1,
+                                        regularExpression: RegularExpressionUtils.digitsPattern,
+                                        keyBoardType: TextInputType.number,
+                                        validationType: ValidationTypeEnum.pNumber,
+                                        inputLength: 10,
                                       ),
-                                      SizedBox(
-                                        height: 1.w,
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 2.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(StringUtils.mob2.tr, fontWeight: FontWeight.w500),
+                                      SizedBox(height: 1.w),
+                                      CommonTextField(
+                                        textEditController: mob2,
+                                        regularExpression: RegularExpressionUtils.digitsPattern,
+                                        keyBoardType: TextInputType.number,
+                                        inputLength: 10,
                                       ),
-
-                                      /// percentage
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 3.w),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(StringUtils.standard, fontWeight: FontWeight.w500),
+                                      SizedBox(height: 1.w),
                                       SizedBox(
-                                        width: 25.w,
-                                        child: CommonTextField(
-                                          textEditController:
-                                              percentageController,
-                                          regularExpression:
-                                              RegularExpressionUtils
-                                                  .percentagePattern,
-                                          keyBoardType: TextInputType.number,
-                                          inputLength: 5,
-                                          validationType:
-                                              ValidationTypeEnum.percentage,
+                                        height: 5.5.h,
+                                        child: standardsList.isNotEmpty
+                                            ? stdListWidget()
+                                            : FutureBuilder<List<String>>(
+                                          future: standardsListFuture,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return const Center(
+                                                child: CircularProgressIndicator(color: ColorUtils.primaryColor),
+                                              );
+                                            } else if (snapshot.hasError) {
+                                              return Center(child: Text('Error: ${snapshot.error}'));
+                                            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                              return const Center(child: Text('No standards found.'));
+                                            } else {
+                                              standardsList = Set<String>.from(snapshot.data!);
+                                              return stdListWidget();
+                                            }
+                                          },
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: CustomText(
-                                  StringUtils.forEnglishGrade,
-                                  // fontWeight: FontWeight.w600,
-                                  color: ColorUtils.red,
-                                  fontSize: 8.sp,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
+                                SizedBox(width: 3.w),
 
-                              // SizedBox(
-                              //   height: 35.w,
-                              // ),
-                              Center(
-                                  child: CustomBtn(
-                                      onTap: () async {
-                                        if (_formKey.currentState!.validate() &&
-                                            selectedValue != null &&
-                                            selectedVillageValue != null) {
-                                          Get.to(() =>
-                                              UploadStudentDetailsScreen(
-                                                percentage: double.parse(
-                                                    percentageController.text),
-                                                standard:
-                                                    selectedValue.toString(),
-                                                studentFullName:
-                                                    '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}',
-                                                villageName:
-                                                    selectedVillageValue,
-                                                mobile: mob2.text.isEmpty
-                                                    ? mob1.text
-                                                    : '${mob1.text} / ${mob2.text}',
-                                              ));
-                                        } else {
-                                          // setState(() {
-                                          //   validationMessage = '* Required';
-                                          // });
-                                        }
-                                      },
-                                      title: "આગળ"))
-                            ],
-                          ),
-                          // Positioned(
-                          //     left: 0,
-                          //     right: 0,
-                          //     // top: 200,
-                          //     bottom:50,
-                          //     child: Align(
-                          //       alignment: Alignment.center,
-                          //       child: Text(StringUtils.copyRightsMadvise),
-                          //     )),
-                        ],
+                                    /// Passing Year (dynamic)
+                                    if (passingYear != null)
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          CustomText("Passing Year", fontWeight: FontWeight.w500),
+                                          SizedBox(height: 1.w),
+                                          Container(
+                                            height: 5.5.h,
+                                            // width: double.infinity,
+                                            padding: EdgeInsets.symmetric(horizontal: 3.w),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(12),
+                                              color: ColorUtils.greyF6,
+                                              border: Border.all(color: ColorUtils.greyF6),
+                                            ),
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              passingYear.toString(),
+                                              style: TextStyle(
+                                                fontSize: 10.5.sp,
+                                                fontFamily: AssetsUtils.poppins,
+                                                color: ColorUtils.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+
+
+                              ],
+                            ),
+                            SizedBox(height: 3.w),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+
+                                CustomText(StringUtils.percentage, fontWeight: FontWeight.w500),
+                                SizedBox(height: 1.w),
+                                SizedBox(
+                                  width:double.infinity,
+                                  child: CommonTextField(
+                                    textEditController: percentageController,
+                                    regularExpression: RegularExpressionUtils.percentagePattern,
+                                    keyBoardType: TextInputType.number,
+                                    inputLength: 5,
+                                    validationType: ValidationTypeEnum.percentage,
+                                  ),
+                                ),
+                                SizedBox(height: 5.h),
+                              ],
+                            ),
+                            Center(
+                              child: CustomBtn(
+                                onTap: () {
+                                  if (_formKey.currentState!.validate() && selectedValue != null) {
+                                    Get.to(() => UploadStudentDetailsScreen(
+                                      percentage: double.parse(percentageController.text),
+                                      standard: selectedValue.toString(),
+                                      studentFullName:
+                                      '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}',
+                                      villageName: 'Jamanvav',
+                                      mobile: mob2.text.isEmpty ? mob1.text : '${mob1.text} / ${mob2.text}',
+                                    ));
+                                  }
+                                },
+                                title: "આગળ",
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
         bottomNavigationBar: Container(
           color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(
-              StringUtils.copyRightsMadvise,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.black),
-            ),
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Text(
+            StringUtils.copyRightsMadvise,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -465,137 +292,35 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   }
 
   DropdownButtonFormField<String> stdListWidget() {
-    Set<String> uniqueStandards = Set<String>.from(standardsList);
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 2.w,
-          vertical: 4.w,
-        ),
-        focusedErrorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.redError, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.redError, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        disabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        errorStyle: TextStyle(
-          color: Colors.red,
-          fontSize: 9.sp,
-          fontFamily: AssetsUtils.poppins,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.w),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.greyF6)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.greyF6)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.greyF6)),
+        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.redError)),
+        hintText: StringUtils.selectStandard.tr,
         filled: true,
         fillColor: ColorUtils.greyF6,
-        hintText: StringUtils.selectStandard.tr,
-        hintStyle: TextStyle(
-          color: ColorUtils.greyD3,
-          fontFamily: AssetsUtils.poppins,
-          fontSize: 10.5.sp,
-        ),
       ),
-      isExpanded: true,
-      isDense: true,
-      menuMaxHeight: 50.w,
-      validator: (value) =>
-          value == null ? StringUtils.selectStandard.tr : null,
-      dropdownColor: ColorUtils.greyF6,
       value: selectedValue,
+      isExpanded: true,
+      menuMaxHeight: 50.w,
+      validator: (value) => value == null ? StringUtils.selectStandard.tr : null,
       onChanged: (String? newValue) {
         setState(() {
           selectedValue = newValue;
+          if (['STD 10', 'STD 12 SCI', 'STD 12 COM'].contains(newValue)) {
+            passingYear = 2024;
+          } else {
+            passingYear = 2025;
+          }
         });
-        // Form.of(context).validate();
       },
-      items: uniqueStandards.map((String standard) {
+      items: standardsList.map((String standard) {
         return DropdownMenuItem<String>(
           value: standard,
           child: Text(standard),
-        );
-      }).toList(),
-    );
-  }
-
-  ///VILLAGE DROPDOWN....
-  DropdownButtonFormField<String> villageListWidget() {
-    Set<String> uniqueVillage = Set<String>.from(villageList);
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 2.w,
-          vertical: 4.w,
-        ),
-        focusedErrorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.redError, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.redError, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        disabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyF6, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        errorStyle: TextStyle(
-          color: Colors.red,
-          fontSize: 9.sp,
-          fontFamily: AssetsUtils.poppins,
-        ),
-        filled: true,
-        fillColor: ColorUtils.greyF6,
-        hintText: StringUtils.selectVillage.tr,
-        hintStyle: TextStyle(
-          color: ColorUtils.greyD3,
-          fontFamily: AssetsUtils.poppins,
-          fontSize: 10.5.sp,
-        ),
-      ),
-      isExpanded: true,
-      isDense: true,
-      menuMaxHeight: 50.w,
-      validator: (value) =>
-          value == null ? StringUtils.villageValidation.tr : null,
-      dropdownColor: ColorUtils.greyF6,
-      value: selectedVillageValue,
-      onChanged: (String? newValue) {
-        setState(() {
-          selectedVillageValue = newValue;
-        });
-        // Form.of(context).validate();
-      },
-      items: uniqueVillage.map((String villageName) {
-        return DropdownMenuItem<String>(
-          value: villageName,
-          child: Text(villageName.capitalizeFirst!),
         );
       }).toList(),
     );
