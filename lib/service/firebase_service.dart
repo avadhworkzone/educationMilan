@@ -4,20 +4,43 @@ List<String> standardsList = [];
 List<String> villageList = [];
 
 class FirestoreService {
-  final CollectionReference standardsCollection = FirebaseFirestore.instance.collection('standardList');
+  Future<List<String>> getStandardsByFamily(String familyCode) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('families')
+          .doc(familyCode)
+          .collection('standerd')
+          .doc('standerd')
+          .get();
 
-  final CollectionReference villageCollection = FirebaseFirestore.instance.collection('villageList');
-
-  Future<List<String>> getStandards() async {
-    QuerySnapshot querySnapshot = await standardsCollection.get();
-    standardsList = querySnapshot.docs.map((doc) => (doc['standard'] as String?) ?? '').toList();
-    return standardsList;
+      if (doc.exists) {
+        List<dynamic> data = doc['standerd'] ?? [];
+        standardsList = data.map((e) => e.toString()).toList();
+      }
+      return standardsList;
+    } catch (e) {
+      print('Error fetching standards: $e');
+      return [];
+    }
   }
 
-  ///VILLAGE LIST.....
-  Future<List<String>> getVillageName() async {
-    QuerySnapshot querySnapshot = await villageCollection.get();
-    villageList = querySnapshot.docs.map((doc) => (doc['villageName'] as String?) ?? '').toList();
-    return villageList;
+  Future<List<String>> getVillagesByFamily(String familyCode) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('families')
+          .doc(familyCode)
+          .collection('village')
+          .doc('villages')
+          .get();
+
+      if (doc.exists) {
+        List<dynamic> data = doc['villages'] ?? [];
+        villageList = data.map((e) => e.toString()).toList();
+      }
+      return villageList;
+    } catch (e) {
+      print('Error fetching villages: $e');
+      return [];
+    }
   }
 }

@@ -1,80 +1,70 @@
 import 'dart:developer';
 import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:Jamanvav/utils/collection_utils.dart';
+
+import '../utils/collection_utils.dart';
 
 class ConnectivityViewModel extends GetxController {
-  ///======================AppVersionRepo View Model=====================
-
   final Connectivity _connectivity = Connectivity();
-
   bool? _isOnline;
   bool? get isOnline => _isOnline;
 
-  startMonitoring() async {
-    await initConnectivity();
-    _connectivity.onConnectivityChanged.listen(
-      (
-        ConnectivityResult result,
-      ) async {
-        if (result == ConnectivityResult.none) {
-          _isOnline = false;
-          update();
-        } else {
-          await _updateConnectionStatus().then(
-            (bool isConnected) {
-              _isOnline = isConnected;
-              update();
-            },
-          );
-        }
-      },
-    );
+  /// Start monitoring connectivity changes
+  void startMonitoring() async {
+    await _initConnectivity();
+
+    _connectivity.onConnectivityChanged.listen((ConnectivityResult result) async {
+      if (result == ConnectivityResult.none) {
+        _isOnline = false;
+      } else {
+        _isOnline = await _hasNetworkAccess();
+      }
+      update();
+    });
   }
 
-  Future<void> initConnectivity() async {
+  /// Initialize connectivity check at startup
+  Future<void> _initConnectivity() async {
     try {
-      var status = await _connectivity.checkConnectivity();
-
-      if (status == ConnectivityResult.none) {
-        _isOnline = false;
-        update();
-      } else {
-        _isOnline = true;
-        update();
-      }
+      final status = await _connectivity.checkConnectivity();
+      _isOnline = status != ConnectivityResult.none;
+      update();
     } on PlatformException catch (e) {
       log("PlatformException: $e");
+      _isOnline = false;
+      update();
     }
   }
 
-  Future<bool> _updateConnectionStatus() async {
-    bool? isConnected;
+  /// Confirm actual internet access
+  Future<bool> _hasNetworkAccess() async {
     try {
-      final List<InternetAddress> result =
-          await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isConnected = true;
-      }
+      final result = await InternetAddress.lookup('google.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException catch (_) {
-      isConnected = false;
+      return false;
     }
-    return isConnected!;
   }
 
-  getAppMetaData() async {
+  /// Fetch app metadata from Firestore
+  Future<Map<String, dynamic>?> getAppMetaData() async {
     try {
-      var data = await CollectionUtils.appMetaDataCollection
-          .doc("snehMilanMetaData")
-          .get();
-      print("data123 == ${data.data()}");
-      return data;
+      final doc = await CollectionUtils.appMetaDataCollection.doc("snehMilanMetaData").get();
+      final data = doc.data();
+      if (data != null) {
+        log("Fetched App MetaData: $data");
+        return data;
+      } else {
+        log("No metadata found in Firestore.");
+        return null;
+      }
     } catch (e) {
-      print("Error == $e");
-      log("Error == $e");
-      return "";
+      log("Error fetching metadata: $e");
+      return null;
     }
   }
 }

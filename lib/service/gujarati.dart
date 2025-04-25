@@ -69,6 +69,8 @@ Map<String, String> gu = {
   StringUtils.or: 'Or',
   StringUtils.xYZShah10thResult: 'XYZ Shah 10th result',
   StringUtils.text100: '100%',
+  StringUtils.editResult: 'પરિણામ સંપાદિત કરો',
+  StringUtils.edit: 'ફેરફાર કરો',
 
   /// exit dialog
   StringUtils.yes: "હા",

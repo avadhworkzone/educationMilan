@@ -13,21 +13,25 @@ class StudentModel {
   String? documentReason;
   String? fcmToken;
   bool? isApproved;
+  String? familyCode; // 👈 NEW FIELD
 
-  StudentModel(
-      {this.userId,
-      this.studentFullName,
-      this.mobileNumber,
-      this.villageName,
-      this.standard,
-      this.result,
-      this.imageId,
-      this.percentage,
-      this.studentId,
-      this.createdDate,
-      this.documentStatus,
-      this.documentReason,
-      this.isApproved});
+  StudentModel({
+    this.userId,
+    this.studentFullName,
+    this.mobileNumber,
+    this.villageName,
+    this.standard,
+    this.result,
+    this.imageId,
+    this.percentage,
+    this.studentId,
+    this.createdDate,
+    this.documentStatus,
+    this.documentReason,
+    this.isApproved,
+    this.fcmToken,
+    this.familyCode, // 👈 Added here
+  });
 
   StudentModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -44,26 +48,29 @@ class StudentModel {
     documentStatus = json['status'];
     documentReason = json['reason'];
     mobileNumber = json['mobileNumber'];
+    familyCode = json['familyCode']; // 👈 Added here
   }
 
   Map<String, dynamic> toJson() => {
-        "userId": userId,
-        "studentFullName": studentFullName,
-        "villageName": villageName,
-        "standard": standard,
-        "result": result,
-        "imageId": imageId,
-        "percentage": percentage,
-        "studentId": studentId,
-        "createdDate": createdDate,
-        "isApproved": isApproved,
-        "status": documentStatus,
-        "reason": documentReason,
-        "fcmToken": fcmToken,
-        "mobileNumber": mobileNumber,
-      };
+    "userId": userId,
+    "studentFullName": studentFullName,
+    "villageName": villageName,
+    "standard": standard,
+    "result": result,
+    "imageId": imageId,
+    "percentage": percentage,
+    "studentId": studentId,
+    "createdDate": createdDate,
+    "isApproved": isApproved,
+    "status": documentStatus,
+    "reason": documentReason,
+    "fcmToken": fcmToken,
+    "mobileNumber": mobileNumber,
+    "familyCode": familyCode, // 👈 Added here
+  };
 
   Map<String, dynamic> updateToJson() => {
-        "studentFullName": studentFullName,
-      };
+    "studentFullName": studentFullName,
+    "familyCode": familyCode, // 👈 Include if updating familyCode
+  };
 }

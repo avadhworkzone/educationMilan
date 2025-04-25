@@ -66,6 +66,8 @@ Map<String, String> en = {
   StringUtils.or: 'Or',
   StringUtils.xYZShah10thResult: 'XYZ Shah 10th result',
   StringUtils.text100: '100%',
+  StringUtils.editResult: 'Edit Result',
+  StringUtils.edit: 'Edit',
 
   /// exit dialog
   StringUtils.yes: "Yes",

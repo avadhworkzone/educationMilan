@@ -22,8 +22,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      name: 'jamanvav', options: DefaultFirebaseOptions.currentPlatform);
+      name: 'edupulsemilan', options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await Firebase.initializeApp(); // ✅ Ensure this is here
 
   PackageInfo info = await PackageInfo.fromPlatform();
   StringUtils.appV = info.version;
@@ -46,7 +47,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var metaData;
 
-  bool appHaveSubScription = true;
+  // bool appHaveSubScription = true;
 
   @override
   void initState() {
@@ -56,13 +57,13 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initData() async {
     metaData = await connectivityViewModel.getAppMetaData();
-    DateTime subscriptionDate =
-        DateTime.parse("${metaData['subscriptionDate']}");
-    print("metaData['subscriptionDate'] == ${subscriptionDate}");
-    print("DateTime.now == ${DateTime.now()}");
-    print("Con == ${subscriptionDate.isBefore(DateTime.now())}");
-    appHaveSubScription = !(subscriptionDate.isBefore(DateTime.now()));
-    print("appHaveSubScription == ${appHaveSubScription}");
+    // DateTime subscriptionDate =
+    //     DateTime.parse("${metaData['subscriptionDate']}");
+    // print("metaData['subscriptionDate'] == ${subscriptionDate}");
+    // print("DateTime.now == ${DateTime.now()}");
+    // print("Con == ${subscriptionDate.isBefore(DateTime.now())}");
+    // appHaveSubScription = !(subscriptionDate.isBefore(DateTime.now()));
+    // print("appHaveSubScription == ${appHaveSubScription}");
   }
 
   @override
@@ -86,10 +87,13 @@ class _MyAppState extends State<MyApp> {
               },
               builder: (connectivityViewModel) {
                 if (connectivityViewModel.isOnline != null) {
-                  return connectivityViewModel.isOnline!
-                      ? appHaveSubScription == false
-                          ? const MaintenanceScreen()
-                          : const SplashScreen()
+                  return
+                    connectivityViewModel.isOnline!
+                      ?
+                    // appHaveSubScription == false
+                    //       ? const MaintenanceScreen()
+                    //       :
+                  const SplashScreen()
                       : const NoInterNetConnected();
                 } else {
                   return const Material();

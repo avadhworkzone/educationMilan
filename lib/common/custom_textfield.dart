@@ -91,11 +91,14 @@ class CommonTextField extends StatelessWidget {
                   .copyWith(color: Colors.black),
           keyboardType: keyBoardType ?? TextInputType.text,
           maxLines: maxLine ?? 1,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(inputLength),
-            FilteringTextInputFormatter.allow(RegExp(regularExpression ?? "")),
-            NoLeadingSpaceFormatter()
-          ],
+    inputFormatters: [
+    if (inputLength != null)
+    LengthLimitingTextInputFormatter(inputLength),
+    if (regularExpression?.isNotEmpty == true)
+    FilteringTextInputFormatter.allow(RegExp(regularExpression!)),
+    NoLeadingSpaceFormatter()
+    ],
+
           obscureText: validationType == ValidationTypeEnum.password
               ? obscureValue!
               : false,
@@ -103,30 +106,32 @@ class CommonTextField extends StatelessWidget {
           enabled: !readOnly!,
           readOnly: readOnly!,
           validator: (value) {
-            return isValidate == false
-                ? null
-                // : value!.isEmpty
-                //     ? validationMessage ?? '* Required'
-                : validationType == ValidationTypeEnum.email
-                    ? ValidationMethod.validateEmail(value)
-                    : validationType == ValidationTypeEnum.password
-                        ? ValidationMethod.validatePassword(value)
-                        : validationType == ValidationTypeEnum.pNumber
-                            ? ValidationMethod.validatePhoneNumber(value)
-                            : validationType == ValidationTypeEnum.name
-                                ? ValidationMethod.validateName(value)
-                                : validationType == ValidationTypeEnum.fName
-                                    ? ValidationMethod.validateFName(value)
-                                    : validationType ==
-                                            ValidationTypeEnum.village
-                                        ? ValidationMethod.validateVillage(
-                                            value)
-                                        : validationType ==
-                                                ValidationTypeEnum.percentage
-                                            ? ValidationMethod
-                                                .validatePercentage(value)
-                                            : null;
-          },
+            if (isValidate == false) return null;
+
+            switch (validationType) {
+              case ValidationTypeEnum.email:
+                return ValidationMethod.validateEmail(value);
+              case ValidationTypeEnum.password:
+                return ValidationMethod.validatePassword(value);
+              case ValidationTypeEnum.pNumber:
+                return ValidationMethod.validatePhoneNumber(value);
+              case ValidationTypeEnum.name:
+                return ValidationMethod.validateName(value);
+              case ValidationTypeEnum.fName:
+                return ValidationMethod.validateFName(value);
+              case ValidationTypeEnum.village:
+                return ValidationMethod.validateVillage(value);
+              case ValidationTypeEnum.percentage:
+                return ValidationMethod.validatePercentage(value);
+              case ValidationTypeEnum.familyCode:
+                return (value == null || value.trim().isEmpty)
+                    ? validationMessage ?? '* Family code is required'
+                    : null;
+              default:
+                return null;
+            }
+          }
+,
           textInputAction:
               maxLine == 4 ? TextInputAction.none : TextInputAction.done,
           cursorColor: ColorUtils.grey5B,

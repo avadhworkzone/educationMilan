@@ -18,7 +18,7 @@
 // import 'package:Jamanvav/utils/shared_preference_utils.dart';
 // import 'package:Jamanvav/utils/string_utils.dart';
 // import 'package:Jamanvav/view/example.dart';
-// import 'package:Jamanvav/view/studentDetailScreen/student_detail_screen.dart';
+// import 'package:Jamanvav/view/studentDetailScreen/create_student_result_screen.dart';
 // import 'package:Jamanvav/viewmodel/auth_viewmodel.dart';
 //
 // import '../../common/common_show_toast.dart';

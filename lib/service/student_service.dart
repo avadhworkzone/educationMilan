@@ -1,59 +1,114 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/apiModel/student_detail_model.dart';
-import '../utils/collection_utils.dart';
+import '../utils/shared_preference_utils.dart';
 
 class StudentService {
-  static Future<bool> studentDetails(StudentModel studentDetail) async {
-    final doc = CollectionUtils.studentDetails.doc();
-    studentDetail.studentId = doc.id;
-    return doc
-        .set(studentDetail.toJson())
-        .then((value) => true)
-        .catchError((e) {
-      print('SIGN UP ERROR :=>$e');
-      return false;
-    });
-  }
-
-  ///=======================get data===================///
-  static Stream<List<StudentModel>> getAppointmentData() {
-    return CollectionUtils.studentDetails
-        .orderBy('createdDate', descending: true)
-        .snapshots()
-        .map((event) =>
-            event.docs.map((e) => StudentModel.fromJson(e.data())).toList());
-  }
-
-  ///=======================update data===================///
-  static Future<bool> studentDetailsEdit(StudentModel studentDetail) async {
-    final doc = CollectionUtils.studentDetails.doc(studentDetail.studentId);
-    return doc
-        .update(studentDetail.toJson())
-        .then((value) => true)
-        .catchError((e) {
-      print('APPOINTMENT UPDATE ERROR :=>$e');
-      return false;
-    });
-  }
-
-  ///delete data
-  static Future<bool> deleteAccountData(String id) async {
-    return CollectionUtils.studentDetails
-        .doc(id)
-        .delete()
-        .then((value) => true)
-        .catchError((e) {
-      print(' delete ERROR :=>$e');
-      return false;
-    });
-  }
-
-  ///=======================delete data===================///
-  static Future<bool> deleteStudent(String studentId) async {
+  /// Create student under: families/{familyCode}/users/{phone}/students/{studentId}
+  static Future<bool> createStudent(StudentModel studentDetail) async {
     try {
-      await CollectionUtils.studentDetails.doc(studentId).delete();
+      final familyCode = PreferenceManagerUtils.getFamilyCode();
+      final phone = PreferenceManagerUtils.getPhoneNo();
+
+      final docRef = FirebaseFirestore.instance
+          .collection('families')
+          .doc(familyCode)
+          .collection('users')
+          .doc(phone)
+          .collection('results')
+          .doc(); // auto-generated ID
+
+      studentDetail.studentId = docRef.id;
+      studentDetail.userId = phone;
+      studentDetail.familyCode = familyCode;
+      studentDetail.createdDate = DateTime.now().toIso8601String();
+
+      await docRef.set(studentDetail.toJson());
+
       return true;
     } catch (e) {
-      print('DELETE ERROR :=> $e');
+      print('CREATE STUDENT ERROR: $e');
+      return false;
+    }
+  }
+
+  /// Get student data for current family/user
+  static Stream<List<StudentModel>> getAppointmentData() {
+    final familyCode = PreferenceManagerUtils.getFamilyCode();
+    final phone = PreferenceManagerUtils.getPhoneNo();
+
+    final studentRef = FirebaseFirestore.instance
+        .collection('families')
+        .doc(familyCode)
+        .collection('users')
+        .doc(phone)
+        .collection('students')
+        .orderBy('createdDate', descending: true);
+
+    return studentRef.snapshots().map((snapshot) => snapshot.docs
+        .map((doc) => StudentModel.fromJson(doc.data()))
+        .toList());
+  }
+
+  /// Update student details
+  static Future<bool> updateStudent(StudentModel studentDetail) async {
+    try {
+      final familyCode = PreferenceManagerUtils.getFamilyCode();
+      final phone = PreferenceManagerUtils.getPhoneNo();
+
+      final docRef = FirebaseFirestore.instance
+          .collection('families')
+          .doc(familyCode)
+          .collection('users')
+          .doc(phone)
+          .collection('results')
+          .doc(studentDetail.studentId); // same collection as in createStudent
+
+      // Optionally update modified date
+      // studentDetail.updatedDate = DateTime.now().toIso8601String();
+
+      await docRef.update(studentDetail.toJson());
+      return true;
+    } catch (e, stackTrace) {
+      print('UPDATE STUDENT ERROR: $e');
+      print('STACK TRACE: $stackTrace');
+      return false;
+    }
+  }
+  ///get result
+  static Stream<List<StudentModel>> getResultsForCurrentUser() {
+    final familyCode = PreferenceManagerUtils.getFamilyCode();
+    final phone = PreferenceManagerUtils.getPhoneNo();
+
+    return FirebaseFirestore.instance
+        .collection('families')
+        .doc(familyCode)
+        .collection('users')
+        .doc(phone)
+        .collection('results')
+        .orderBy('createdDate', descending: true)
+        .snapshots()
+        .map((snap) => snap.docs.map((doc) => StudentModel.fromJson(doc.data())).toList());
+  }
+
+
+  /// Delete student
+  static Future<bool> deleteStudent(String studentId) async {
+    try {
+      final familyCode = PreferenceManagerUtils.getFamilyCode();
+      final phone = PreferenceManagerUtils.getPhoneNo();
+
+      final docRef = FirebaseFirestore.instance
+          .collection('families')
+          .doc(familyCode)
+          .collection('users')
+          .doc(phone)
+          .collection('results')
+          .doc(studentId);
+
+      await docRef.delete();
+      return true;
+    } catch (e) {
+      print('DELETE STUDENT ERROR: $e');
       return false;
     }
   }

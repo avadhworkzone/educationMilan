@@ -1,4 +1,4 @@
-package com.madvise.jamanedu
+package com.madvise.snehmilanworld
 
 import io.flutter.embedding.android.FlutterActivity
 

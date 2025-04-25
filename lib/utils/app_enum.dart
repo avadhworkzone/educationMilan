@@ -3,7 +3,7 @@ enum ValidationTypeEnum {
   email,
   pNumber,
   fName,
-  name,
+  name,familyCode,
   percentage,
   village,
   none

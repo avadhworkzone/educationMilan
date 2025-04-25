@@ -1,7 +1,7 @@
 class StringUtils {
   static String appVersion = '';
   static String appV = '';
-  static String appName = "જમણવાવ ગામ પટેલ પરિવાર";
+  static String appName = "Snehmilan";
   static String details = "વિગતો";
   static String copyRightsMadvise = "@copyright madviseinfotech®";
   static String somethingWentWrong = "કંઈક ખોટું થયું!";
@@ -67,6 +67,8 @@ class StringUtils {
   static String or = 'Or';
   static String xYZShah10thResult = 'XYZ Shah 10th result';
   static String text100 = '100%';
+  static String editResult = 'પરિણામ સંપાદિત કરો';
+  static String edit = 'ફેરફાર કરો';
 
   /// exit dialog
   static String yes = "હા";

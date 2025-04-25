@@ -8,6 +8,7 @@ class PreferenceManagerUtils {
   static String isLang = "isLang";
   static String fcm = "fcm";
   static String phoneNo = 'phoneNo';
+  static String familyCode = 'familyCode';
 
   ///IsLogin
   static Future setIsLogin(bool value) async {
@@ -41,8 +42,17 @@ class PreferenceManagerUtils {
     await getStorage.write(phoneNo, value);
   }
 
+
   static String getPhoneNo() {
     return getStorage.read(phoneNo) ?? "";
+  }
+
+  ///phone no
+  static Future setFamilyCode(String value) async {
+    await getStorage.write(familyCode, value);
+  }
+  static String getFamilyCode() {
+    return getStorage.read(familyCode) ?? "";
   }
 
   /// USER DATA

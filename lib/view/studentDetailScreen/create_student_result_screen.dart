@@ -8,9 +8,10 @@ import 'package:Jamanvav/utils/app_enum.dart';
 import 'package:Jamanvav/utils/color_utils.dart';
 import 'package:Jamanvav/utils/regular_expression.dart';
 import 'package:Jamanvav/utils/string_utils.dart';
-import 'package:Jamanvav/view/upload_student_details/upload_student_details.dart';
+import 'package:Jamanvav/view/studentDetailScreen/upload_student_details.dart';
 import '../../service/firebase_service.dart';
 import '../../utils/asset_utils.dart';
+import '../../utils/shared_preference_utils.dart';
 import '../home screen/home_screen.dart';
 
 class StudentDetailScreen extends StatefulWidget {
@@ -30,23 +31,21 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
 
   final FirestoreService firestoreService = FirestoreService();
 
-  String? selectedValue, selectedVillageValue;
+  String? selectedStandard;
+  String? selectedVillage;
   Future<List<String>>? standardsListFuture;
   Future<List<String>>? villageListFuture;
-
-  int? passingYear;
   Set<String> standardsList = {};
+  Set<String> villageList = {};
+
+  String? familyCode;
 
   @override
   void initState() {
     super.initState();
-    selectedVillageValue = 'Jamanvav';
-    standardsListFuture = firestoreService.getStandards().then((list) {
-      standardsList = Set<String>.from(list);
-      print('standerd--->$standardsList');
-      return list;
-    });
-    villageListFuture = firestoreService.getVillageName();
+    familyCode = PreferenceManagerUtils.getFamilyCode();
+    standardsListFuture = firestoreService.getStandardsByFamily(familyCode!);
+    villageListFuture = firestoreService.getVillagesByFamily(familyCode!);
   }
 
   @override
@@ -83,7 +82,6 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-
                     decoration: BoxDecoration(
                       color: ColorUtils.white,
                       borderRadius: BorderRadius.only(
@@ -160,112 +158,107 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                               ],
                             ),
                             SizedBox(height: 3.w),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      CustomText(StringUtils.standard, fontWeight: FontWeight.w500),
-                                      SizedBox(height: 1.w),
-                                      SizedBox(
-                                        height: 5.5.h,
-                                        child: standardsList.isNotEmpty
-                                            ? stdListWidget()
-                                            : FutureBuilder<List<String>>(
-                                          future: standardsListFuture,
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState == ConnectionState.waiting) {
-                                              return const Center(
-                                                child: CircularProgressIndicator(color: ColorUtils.primaryColor),
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(child: Text('Error: ${snapshot.error}'));
-                                            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                                              return const Center(child: Text('No standards found.'));
-                                            } else {
-                                              standardsList = Set<String>.from(snapshot.data!);
-                                              return stdListWidget();
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 3.w),
+                            CustomText(StringUtils.selectStandard.tr, fontWeight: FontWeight.w500),
+                            SizedBox(height: 1.w),
 
-                                    /// Passing Year (dynamic)
-                                    if (passingYear != null)
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          CustomText("Passing Year", fontWeight: FontWeight.w500),
-                                          SizedBox(height: 1.w),
-                                          Container(
-                                            height: 5.5.h,
-                                            // width: double.infinity,
-                                            padding: EdgeInsets.symmetric(horizontal: 3.w),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: ColorUtils.greyF6,
-                                              border: Border.all(color: ColorUtils.greyF6),
-                                            ),
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              passingYear.toString(),
-                                              style: TextStyle(
-                                                fontSize: 10.5.sp,
-                                                fontFamily: AssetsUtils.poppins,
-                                                color: ColorUtils.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                            FutureBuilder<List<String>>(
+                              future: standardsListFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  return DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.w),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                      filled: true,
+                                      fillColor: ColorUtils.greyF6,
+                                    ),
+                                    value: selectedStandard,
+                                    hint: Text(StringUtils.selectStandard.tr),
 
-
-
-                              ],
+                                    isExpanded: true,
+                                    validator: (value) => value == null ? StringUtils.selectStandard.tr : null,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedStandard = newValue;
+                                      });
+                                    },
+                                    items: snapshot.data!.map((String standard) {
+                                      return DropdownMenuItem<String>(
+                                        value: standard,
+                                        child: Text(standard),
+                                      );
+                                    }).toList(),
+                                  );
+                                } else {
+                                  return const Text("No standards available");
+                                }
+                              },
                             ),
                             SizedBox(height: 3.w),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                            CustomText(StringUtils.selectVillage.tr, fontWeight: FontWeight.w500),
+                            SizedBox(height: 1.w),
 
-
-                                CustomText(StringUtils.percentage, fontWeight: FontWeight.w500),
-                                SizedBox(height: 1.w),
-                                SizedBox(
-                                  width:double.infinity,
-                                  child: CommonTextField(
-                                    textEditController: percentageController,
-                                    regularExpression: RegularExpressionUtils.percentagePattern,
-                                    keyBoardType: TextInputType.number,
-                                    inputLength: 5,
-                                    validationType: ValidationTypeEnum.percentage,
-                                  ),
-                                ),
-                                SizedBox(height: 5.h),
-                              ],
+                            FutureBuilder<List<String>>(
+                              future: villageListFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  return DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.w),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                      filled: true,
+                                      fillColor: ColorUtils.greyF6,
+                                    ),
+                                    value: selectedVillage,
+                                    isExpanded: true,
+                                    hint: Text(StringUtils.selectVillage.tr),
+                                    validator: (value) => value == null ? 'Please select village' : null,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedVillage = newValue;
+                                      });
+                                    },
+                                    items: snapshot.data!.map((String village) {
+                                      return DropdownMenuItem<String>(
+                                        value: village,
+                                        child: Text(village),
+                                      );
+                                    }).toList(),
+                                  );
+                                } else {
+                                  return const Text("No villages available");
+                                }
+                              },
                             ),
+                            SizedBox(height: 3.w),
+                            CustomText(StringUtils.percentage, fontWeight: FontWeight.w500),
+                            SizedBox(height: 1.w),
+                            CommonTextField(
+                              textEditController: percentageController,
+                              regularExpression: RegularExpressionUtils.percentagePattern,
+                              keyBoardType: TextInputType.number,
+                              inputLength: 5,
+                              validationType: ValidationTypeEnum.percentage,
+                            ),
+                            SizedBox(height: 5.h),
                             Center(
                               child: CustomBtn(
                                 onTap: () {
-                                  if (_formKey.currentState!.validate() && selectedValue != null) {
+                                  if (_formKey.currentState!.validate() && selectedStandard != null && selectedVillage != null) {
                                     Get.to(() => UploadStudentDetailsScreen(
                                       percentage: double.parse(percentageController.text),
-                                      standard: selectedValue.toString(),
-                                      studentFullName:
-                                      '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}',
-                                      villageName: 'Jamanvav',
+                                      standard: selectedStandard,
+                                      studentFullName: '${fullNameController.text.toUpperCase()} / ${fatherNameController.text.toUpperCase()}',
+                                      villageName: selectedVillage,
                                       mobile: mob2.text.isEmpty ? mob1.text : '${mob1.text} / ${mob2.text}',
                                     ));
                                   }
                                 },
-                                title: "આગળ",
+                                title: StringUtils.next.tr,
                               ),
                             ),
                           ],
@@ -273,7 +266,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -288,41 +281,6 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  DropdownButtonFormField<String> stdListWidget() {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.w),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.greyF6)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.greyF6)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.greyF6)),
-        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ColorUtils.redError)),
-        hintText: StringUtils.selectStandard.tr,
-        filled: true,
-        fillColor: ColorUtils.greyF6,
-      ),
-      value: selectedValue,
-      isExpanded: true,
-      menuMaxHeight: 50.w,
-      validator: (value) => value == null ? StringUtils.selectStandard.tr : null,
-      onChanged: (String? newValue) {
-        setState(() {
-          selectedValue = newValue;
-          if (['STD 10', 'STD 12 SCI', 'STD 12 COM'].contains(newValue)) {
-            passingYear = 2024;
-          } else {
-            passingYear = 2025;
-          }
-        });
-      },
-      items: standardsList.map((String standard) {
-        return DropdownMenuItem<String>(
-          value: standard,
-          child: Text(standard),
-        );
-      }).toList(),
     );
   }
 }

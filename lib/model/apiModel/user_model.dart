@@ -1,31 +1,19 @@
 class UserModel {
   String? userId;
   String? phoneNumber;
-  String? userPin;
+  String? familyCode;
 
-
-  UserModel({
-    this.userId,
-    this.phoneNumber,
-    this.userPin,
-
-  });
+  UserModel({this.userId, this.phoneNumber, this.familyCode});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     phoneNumber = json['phoneNumber'];
-    userPin = json['userPin'];
-
+    familyCode = json['familyCode'];
   }
 
   Map<String, dynamic> toJson() => {
-    "userId" : userId,
+    "userId": userId,
     "phoneNumber": phoneNumber,
-    "userPin" : userPin,
-
-  };
-
-  Map<String, dynamic> updateToJson() => {
-    "phoneNumber": phoneNumber,
+    "familyCode": familyCode,
   };
 }

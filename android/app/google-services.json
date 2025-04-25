@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "814017156406",
-    "project_id": "jamanvavpatelsamaj",
-    "storage_bucket": "jamanvavpatelsamaj.appspot.com"
+    "project_number": "685157106296",
+    "project_id": "edupulsemilan",
+    "storage_bucket": "edupulsemilan.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:814017156406:android:924cc7eec41d7e695fcf97",
+        "mobilesdk_app_id": "1:685157106296:android:88f553f7e4faf7a0dd238d",
         "android_client_info": {
-          "package_name": "com.madvise.jamanedu"
+          "package_name": "com.madvise.snehmilanworld"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyApme-v0NXG11h8Afosdwl8M4ynrcMXyX4"
+          "current_key": "AIzaSyCsV_8SGeCyNDTHtKy1g9gSZh8IUicVeSE"
         }
       ],
       "services": {
