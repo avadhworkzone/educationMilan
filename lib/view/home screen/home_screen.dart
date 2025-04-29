@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String finalDate = '';
   bool isFinalDate = false;
   bool enLng = false;
-
+bool subSubscription=false;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final ConnectivityViewModel connectivityViewModel = Get.find<ConnectivityViewModel>();
 
@@ -81,6 +81,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
       final familyData = familyDoc.data();
       setState(() {
+        subSubscription=familyData?['isActive']??false;
+
         familyName = familyData?['familyName'] ?? '';
         StringUtils.appName = familyName ?? StringUtils.appName;
 
@@ -142,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       key: _key,
       drawer: buildDrawer(),
       backgroundColor: ColorUtils.purple2D,
-      floatingActionButton: isFinalDate
+      floatingActionButton: isFinalDate||subSubscription==false
           ? null
           : FloatingActionButton(
         backgroundColor: ColorUtils.purple2D,
@@ -304,10 +306,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                CustomText(
-                                                  student.studentFullName ?? 'No Name',
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12.sp,
+                                                Expanded(
+                                                  child: CustomText(
+                                                    student.studentFullName ?? 'No Name',
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 12.sp,
+                                                  ),
                                                 ),
                                                 Container(
                                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

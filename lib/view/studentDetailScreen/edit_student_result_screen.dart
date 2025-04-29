@@ -131,14 +131,14 @@ class _EditStudentScreenState extends State<EditStudentScreen> {
                         CustomText(StringUtils.studentFullName),
                         CommonTextField(
                           textEditController: fullNameController,
-                          regularExpression: RegularExpressionUtils.alphabetSpacePattern,
+                          // regularExpression: RegularExpressionUtils.alphabetSpacePattern,
                           validationType: ValidationTypeEnum.name,
                         ),
                         SizedBox(height: 3.h),
                         CustomText(StringUtils.fatherFullName),
                         CommonTextField(
                           textEditController: fatherNameController,
-                          regularExpression: RegularExpressionUtils.alphabetSpacePattern,
+                          // regularExpression: RegularExpressionUtils.alphabetSpacePattern,
                           validationType: ValidationTypeEnum.fName,
                         ),
                         SizedBox(height: 3.h),
@@ -192,19 +192,37 @@ class _EditStudentScreenState extends State<EditStudentScreen> {
                             if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(child: CircularProgressIndicator());
                             } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                              // Auto-select if only one village is available
+                              if (snapshot.data!.length == 1 && selectedVillage == null) {
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  setState(() {
+                                    selectedVillage = snapshot.data!.first;
+                                  });
+                                });
+                              }
+
                               return DropdownButtonFormField<String>(
-                                value: selectedVillage,
-                                isExpanded: true,
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.w),
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                   filled: true,
                                   fillColor: ColorUtils.greyF6,
                                 ),
-                                hint: Text(StringUtils.selectVillage),
+                                value: selectedVillage,
+                                isExpanded: true,
+                                hint: Text(StringUtils.selectVillage.tr),
                                 validator: (value) => value == null ? 'Please select village' : null,
-                                onChanged: (value) => setState(() => selectedVillage = value),
-                                items: snapshot.data!.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedVillage = newValue;
+                                  });
+                                },
+                                items: snapshot.data!.map((String village) {
+                                  return DropdownMenuItem<String>(
+                                    value: village,
+                                    child: Text(village),
+                                  );
+                                }).toList(),
                               );
                             } else {
                               return const Text("No villages available");

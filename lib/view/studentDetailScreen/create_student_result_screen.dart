@@ -107,7 +107,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                             SizedBox(height: 1.w),
                             CommonTextField(
                               textEditController: fullNameController,
-                              regularExpression: RegularExpressionUtils.alphabetSpacePattern,
+                              // regularExpression: RegularExpressionUtils.alphabetSpacePattern,
                               keyBoardType: TextInputType.name,
                               validationType: ValidationTypeEnum.name,
                             ),
@@ -116,7 +116,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                             SizedBox(height: 1.w),
                             CommonTextField(
                               textEditController: fatherNameController,
-                              regularExpression: RegularExpressionUtils.alphabetSpacePattern,
+                              // regularExpression: RegularExpressionUtils.alphabetSpacePattern,
                               keyBoardType: TextInputType.name,
                               validationType: ValidationTypeEnum.fName,
                             ),
@@ -206,6 +206,15 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return const Center(child: CircularProgressIndicator());
                                 } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  // Auto-select if only one village is available
+                                  if (snapshot.data!.length == 1 && selectedVillage == null) {
+                                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      setState(() {
+                                        selectedVillage = snapshot.data!.first;
+                                      });
+                                    });
+                                  }
+
                                   return DropdownButtonFormField<String>(
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.w),
@@ -234,6 +243,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                                 }
                               },
                             ),
+
                             SizedBox(height: 3.w),
                             CustomText(StringUtils.percentage, fontWeight: FontWeight.w500),
                             SizedBox(height: 1.w),
