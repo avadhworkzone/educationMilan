@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33939fb6-2b68-489d-b46c-a8921fa79489" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+    <list default="true" id="9aeea737-faf7-4ed0-a740-ef6e69a7c0fd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/app-release.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/app-release.aab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/view/home screen/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/home screen/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/view/studentDetailScreen/create_student_result_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/studentDetailScreen/create_student_result_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/view/studentDetailScreen/edit_student_result_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/studentDetailScreen/edit_student_result_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/view/studentDetailScreen/upload_student_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/studentDetailScreen/upload_student_details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +32,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="2wOWliBJLgAkOWoQtL50iC77PFW" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2wU7CWone8GFWfDf54ByZaPaEAf" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,7 +49,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "memory.settings.postsync.last.time.stamp": "1745913264173",
+    "memory.settings.postsync.last.time.stamp": "1746084187864",
     "show.migrate.to.gradle.popup": "false"
   },
   "keyToStringList": {
@@ -128,11 +129,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="33939fb6-2b68-489d-b46c-a8921fa79489" name="Changes" comment="" />
-      <created>1745913252329</created>
+      <changelist id="9aeea737-faf7-4ed0-a740-ef6e69a7c0fd" name="Changes" comment="" />
+      <created>1746084171354</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1745913252329</updated>
+      <updated>1746084171354</updated>
     </task>
     <servers />
   </component>

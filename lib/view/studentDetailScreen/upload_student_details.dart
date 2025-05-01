@@ -25,14 +25,21 @@ class UploadStudentDetailsScreen extends StatefulWidget {
   final num? percentage;
   final String? mobile;
 
-  const UploadStudentDetailsScreen({super.key, this.villageName, this.studentFullName, this.standard, this.mobile, this.percentage});
+  const UploadStudentDetailsScreen({
+    super.key,
+    this.villageName,
+    this.studentFullName,
+    this.standard,
+    this.mobile,
+    this.percentage,
+  });
 
   @override
   State<UploadStudentDetailsScreen> createState() => _UploadStudentDetailsScreenState();
 }
 
 class _UploadStudentDetailsScreenState extends State<UploadStudentDetailsScreen> {
-  XFile? selectedImage;
+  List<XFile>? selectedImages = [];
   String? downloadURL;
   String? imageId;
 
@@ -46,7 +53,9 @@ class _UploadStudentDetailsScreenState extends State<UploadStudentDetailsScreen>
       if (fileSizeMB <= 15) {
         final compressed = await compressFile(selectedFile);
         if (compressed != null) {
-          setState(() => selectedImage = XFile(compressed.path));
+          setState(() {
+            selectedImages!.add(XFile(compressed.path));
+          });
         }
       } else {
         ToastUtils.showCustomToast(
@@ -58,19 +67,58 @@ class _UploadStudentDetailsScreenState extends State<UploadStudentDetailsScreen>
     }
   }
 
-  Future<void> _uploadImageToFirebase() async {
-    if (selectedImage == null) return;
+  Future<void> _uploadImagesToFirebase() async {
+    if (selectedImages == null || selectedImages!.isEmpty) return;
 
     try {
-      final fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      final ref = firebase_storage.FirebaseStorage.instance.ref('images/$fileName.jpg');
-      await ref.putFile(File(selectedImage!.path));
-      print('download----$downloadURL');
-      downloadURL = await ref.getDownloadURL();
-      imageId = fileName;
+      List<String> downloadURLs = [];
+      List<String> imageIds = [];
+
+      for (var selectedImage in selectedImages!) {
+        final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+        final ref = firebase_storage.FirebaseStorage.instance.ref('images/$fileName.jpg');
+        await ref.putFile(File(selectedImage.path));
+
+        String downloadURL = await ref.getDownloadURL();
+        downloadURLs.add(downloadURL);
+        imageIds.add(fileName);
+      }
+
+      setState(() {
+        this.downloadURL = downloadURLs.join(',');
+        this.imageId = imageIds.join(',');
+      });
     } catch (e) {
-      print('Error uploading image: $e');
+      print('Error uploading images: $e');
     }
+  }
+
+  Widget _buildImageThumbnail(XFile image, int index) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.file(
+            File(image.path),
+            width: 25.w,
+            height: 25.w,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedImages!.removeAt(index);
+              });
+            },
+            child: Icon(Icons.remove_circle, color: ColorUtils.red, size: 8.w),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _imagePickerBottomSheet(BuildContext context) {
@@ -166,15 +214,58 @@ class _UploadStudentDetailsScreenState extends State<UploadStudentDetailsScreen>
                           width: double.infinity,
                           height: 60.w,
                           alignment: Alignment.center,
-                          child: selectedImage != null
-                              ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.file(
-                              File(selectedImage!.path),width: Get.width,
-                              fit: BoxFit.cover,
-                            ),
+                          child: selectedImages!.isEmpty
+                              ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add_a_photo, size: 30.w, color: ColorUtils.purple93),
+                              SizedBox(height: 10),
+                              Text("Tap to add images", style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
+                            ],
                           )
-                              : Image.asset("assets/images/uploadImage.png", width: 30.w, height: 30.w),
+                              : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                // Show added images
+                                ...List.generate(
+                                  selectedImages!.length,
+                                      (index) => Padding(
+                                    padding: EdgeInsets.only(right: 8.w),
+                                    child: _buildImageThumbnail(selectedImages![index], index),
+                                  ),
+                                ),
+                                // Show the plus button after the last image
+                                Padding(
+                                  padding: EdgeInsets.only(right: 8.w),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor: ColorUtils.whiteF9,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(top: Radius.circular(6.w)),
+                                        ),
+                                        builder: _imagePickerBottomSheet,
+                                      );                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Container(
+                                        width: 25.w,
+                                        height: 25.w,
+                                        color: Colors.grey.withOpacity(0.3),
+                                        child: Icon(
+                                          Icons.add,
+                                          color: ColorUtils.purple93,
+                                          size: 12.w,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -182,13 +273,13 @@ class _UploadStudentDetailsScreenState extends State<UploadStudentDetailsScreen>
                     CustomBtn(
                       title: StringUtils.submit.tr,
                       onTap: () async {
-                        if (selectedImage == null) {
+                        if (selectedImages == null || selectedImages!.isEmpty) {
                           ToastUtils.showCustomToast(context: context, title: StringUtils.image.tr);
                           return;
                         }
 
                         showLoadingDialog(context: context);
-                        await _uploadImageToFirebase();
+                        await _uploadImagesToFirebase();
 
                         final reqModel = StudentModel(
                           studentFullName: widget.studentFullName,
@@ -220,7 +311,7 @@ class _UploadStudentDetailsScreenState extends State<UploadStudentDetailsScreen>
                           );
                         }
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

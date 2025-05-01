@@ -277,7 +277,13 @@ bool subSubscription=false;
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       GestureDetector(
-                                        onTap: () => showImagePopup(student.result ?? ''),
+                                        onTap: () {
+                                          if ((student.result ?? '').isNotEmpty) {
+                                            final urls = student.result!.split(','); // multiple image URLs
+                                            showMultiImageViewer(urls);
+                                          }
+                                        },
+                                        // onTap: () => showImagePopup(student.result ?? ''),
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(10),
                                           child: Image.network(
@@ -455,6 +461,77 @@ bool subSubscription=false;
       ),
     );
   }
+
+  void showMultiImageViewer(List<String> imageUrls) {
+    PageController controller = PageController();
+    int currentIndex = 0;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              backgroundColor: ColorUtils.primaryColor,
+              insetPadding: EdgeInsets.zero,
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    controller: controller,
+                    itemCount: imageUrls.length,
+                    onPageChanged: (index) => setState(() => currentIndex = index),
+                    itemBuilder: (context, index) {
+                      return InteractiveViewer(
+                        child: Image.network(
+                          imageUrls[index],
+                          fit: BoxFit.contain,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return const Center(child: CircularProgressIndicator(color: ColorUtils.primaryColor));
+                          },
+                          errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.error, color: Colors.white),
+                        ),
+                      );
+                    },
+                  ),
+                  Positioned(
+                    top: 40,
+                    right: 0,left: 0,
+                    child: Row(
+mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                  Text('My Result',style: TextStyle(color: ColorUtils.white,fontSize: 16,fontWeight: FontWeight.bold),),
+                      SizedBox(width: 20,),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).pop(),
+                          child: const Icon(Icons.cancel_outlined, color: Colors.white, size: 30),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 30,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Text(
+                        '${currentIndex + 1} / ${imageUrls.length}',
+                        style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
 
   Widget languageToggle(String label, bool isEnglish) {
     bool isActive = enLng == isEnglish;
